@@ -1,0 +1,45 @@
+/* Empty. Add your own CSS if you like */
+.pac-container{
+    width: 100% !important;
+    left: 0px !important;
+}
+
+.pac-item{
+    line-height: 40px !important;
+}
+
+.pac-icon{
+    margin-top: 10px !important;
+}
+
+#product-list .row{
+    border-color: #ddd;
+    background-color: #fff;
+    color: #444;
+    position: relative;
+    z-index: 2;
+    /*display: block;*/
+    margin: -1px;
+    padding: 8px;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 16px;
+}
+
+#product-list .icon{
+    font-size: 30px;
+}
+
+#product-list .item-note{
+    float:none;
+}
+
+.buy-text{
+    float: right;
+    color: #aaa;
+    font-size: 10px;
+}
+
+#add-quantity, #remove-quantity{
+    cursor: pointer;
+}

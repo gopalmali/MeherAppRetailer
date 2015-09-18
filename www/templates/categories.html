@@ -1,0 +1,21 @@
+<ion-view view-title="Meher">
+
+  <ion-content>
+
+    <!--<ion-list>-->
+      <!--<ion-item ng-repeat="playlist in playlists" href="#/app/categories/{{playlist.id}}">-->
+        <!--{{playlist.title}}-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
+
+
+    <div class="list">
+      <a class="item item-thumbnail-left" ng-repeat="category in categorylists" href="#/app/categories/{{category.id}}">
+        <img ng-src={{category.image}}>
+        <h2>{{category.title}}</h2>
+        <p>{{category.subtitle}}</p>
+      </a>
+    </div>
+
+  </ion-content>
+</ion-view>

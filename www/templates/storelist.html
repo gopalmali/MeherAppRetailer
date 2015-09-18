@@ -1,0 +1,17 @@
+<ion-view view-title="{{storelistId}}">
+  <ion-content>
+    <!--<ion-google-place placeholder="Enter an address, Apt# and ZIP" ng-model="location" />-->
+    <label class="item item-input">
+      <input type="text" placeholder="Detecting Location ..." ng-model="location" googleplace="" class="ng-pristine ng-valid" autocomplete="off"><!-- googleplace -->
+    </label>
+    <div class="list">
+      <a class="item item-thumbnail-left" ng-repeat="store in storeList | orderBy: 'distance' " href="#/app/categories/{{storelistId}}/{{store.name}}">
+        <img src="http://www.iconshock.com/img_jpg/BRILLIANT/shopping/jpg/128/grocery_shop_icon.jpg">
+        <h2>{{store.name}}</h2>
+        <p>{{store.address}}</p>
+        <span class="distance_from_user_rest"> distance: {{distanceTo(store)}}</span>
+      </a>
+    </div>
+
+  </ion-content>
+</ion-view>

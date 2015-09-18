@@ -1,0 +1,15 @@
+<ion-view view-title="Meher">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="category in categories" type="item-text-wrap" href="#/tab/categories/{{category.id}}">
+        <img ng-src="{{category.face}}">
+        <h2>{{category.name}}</h2>
+        <p>{{category.lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-assertive" ng-click="remove(category)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
