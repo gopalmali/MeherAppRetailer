@@ -5,29 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles',])
-
-app.directive('googleplace', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, model) {
-      var options = {
-        types: ['geocode'],
-        componentRestrictions: {}
-      };
-      scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
-      google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-        scope.$apply(function() {
-          var place = scope.gPlace.getPlace();
-          console.log(place.geometry.location.lat(),place.geometry.location.lng());
-          //model.$setViewValue(element.val());
-          model.$setViewValue(place);
-        });
-      });
-    }
-  };
-})
-
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles','ion-google-place'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -53,6 +31,15 @@ app.directive('googleplace', function() {
             controller: 'AppCtrl'
           })
 
+          .state('app.postorder', {
+            url: '/postorder',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/post-order.html',
+                controller: 'postOrderCtrl'
+              }
+            }
+          })
           .state('app.browse', {
             url: '/browse',
             views: {
@@ -88,8 +75,16 @@ app.directive('googleplace', function() {
                 controller: 'storeCtrl'
               }
             }
-          });
-
+          })
+      .state('app.order', {
+        url: '/order',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/order.html',
+            controller: 'orderCtrl'
+          }
+        }
+      });
       //.state('app.singleStore', {
       //  url: '/categories/:storelistId',
       //  views: {

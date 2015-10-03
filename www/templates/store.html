@@ -1,112 +1,134 @@
-<ion-view view-title="Order">
+<ion-view view-title="Store's Page">
   <ion-content>
-    <p><h3>{{storeId}}</h3></p>
-    </br></br>
+    <div class="row">
+      <div class="col">
+        <h3>{{storeId}}</h3>
+        <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+          {{StoreSelected.address}}</p>
+        <div style="color: #AAAAAA;">
+            <span>
+              <i class="ion-android-bicycle" style="font-size: 22px;"></i>
+            {{StoreDistance}} KM Away.
+            </span>
+              <span style="float: right;" >
+              Delivers in:
+              <i class="ion-clock" style="font-size: 20px;"></i>
+              30 Mins.
+            </span>
+        </div>
+      </div>
+    </div>
+    <!--</br></br>-->
+    <div class="text-center">
+      <h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>
+    </div>
+    <div id="customize-order">
+      <div class="bar bar-header item-input-inset addcustom">
+        <div class="col-50">
+          <label class="item-input-wrapper reverse-wrapper">
+            <i class="icon ion-compose"></i>
+            <input class="google-place-search ng-pristine ng-valid ng-touched" type="text" ng-model="customProduct.name" placeholder="Item Name">
+          </label>
+        </div>
+        <div class="col">
+          <label class="item-input-wrapper reverse-wrapper">
+            <i class="icon ion-funnel"></i>
+            <input class="google-place-search ng-pristine ng-valid ng-touched" type="text" ng-model="customProduct.customQuantity" placeholder="Qty(1 KG)">
+          </label>
+        </div>
+        <button class="button button-positive" ng-click="addcustomProduct(customProduct)">Add</button>
+      </div>
+    </div>
 
-    <div id="menu-view">
+    <!--<div id="custom-order" class="row list">-->
+      <!--<div class="col col-50">-->
+        <!--<label class="item item-input">-->
+          <!--<input type="text" ng-model="customProduct.name" placeholder="Item Name">-->
+        <!--</label>-->
+      <!--</div>-->
+      <!--<div class="col col-30">-->
+        <!--<label class="item item-input">-->
+          <!--<input type="text" class="cust-qty" ng-model="customProduct.customQuantity" placeholder="Qty(1 KG)">-->
+        <!--</label>-->
+      <!--</div>-->
+      <!--<div class="col col-20 text-right">-->
+        <!--<button class="button button-positive" ng-click="addcustomProduct(customProduct)">Add-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <div id="menu-view" ng-if="storeCategory.type=='general'">
       <ion-slide-box slide-tabs-scrollable="true"  show-pager="false" ion-slide-tabs>
-        <ion-slide  ng-repeat="menuCategories in productCatalog" ion-slide-tab-label="{{menuCategories.name}}">
+        <ion-slide  ng-repeat="(key, menuCategories) in productCatalog" ion-slide-tab-label="{{menuCategories.title}}">
           <div class="item item-divider">
-            {{menuCategories.name}}<span><h5 class="buy-text">Buy</h5></span>
+            {{menuCategories.title}}<span class="text-center price-text">*Price are estimation</span><span><h5 class="buy-text">Buy</h5></span>
           </div>
-          <div id="product-list" class="list">
-            <div class="row" ng-repeat="product in menuCategories.products" >
-
-              <!--<div class="item item-icon-left item-icon-right" href="#">-->
-              <!--<i class="icon ion-chatbubble-working"></i>-->
-              <!--{{product.name}}-->
-              <!--<button class="button button-calm">-->
-              <!--<i class="icon ion-bag"></i>-->
-              <!--</button>-->
-              <!--</div>-->
-              <!--<li class="item item item-checkbox">-->
-              <!--<img ng-src={{product.image}}>-->
-              <!--{{product.name}}-->
-
-              <!--<label class="checkbox">-->
-              <!--<input type="checkbox">-->
-              <!--</label>-->
-
-              <!--</li>-->
-
-              <!--<div class="row item">-->
-                <!--<div class="col col-25">-->
-                <!--<i class="icon">-->
-                <!--<img ng-src={{product.image}}>-->
-                <!--</i>-->
-                <!--{{product.name}}-->
-                  <!--</div>-->
-
-                <!--<div class="col col-50 text-center">-->
-                  <!--<span class="ion-android-add-circle"></span>-->
-                  <!--<span class="badge badge-assertive">{{product.quantity}}</span>-->
+          <ion-scroll style="height: 350px;">
+            <ion-list  id="product-list">
+              <div class="row" collection-repeat="product in menuCategories.products" >
+                <div class="col">
+                  <!--<img ng-src='http://images.getmeher.com/{{menuCategories.imagefolder}}/{{product.ImgFileName}}' width="64px" height="64px">-->
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+              </div>
 
 
-                  <!--&lt;!&ndash;{{product.unit}}&ndash;&gt;-->
-                  <!--&lt;!&ndash;{{product.price}} /-Rs&ndash;&gt;-->
+              <!--<div class="row" collection-repeat="product in menuCategories.products" >-->
+                <!--<div class="col col-10">-->
+                  <!--<img ng-src='http://images.getmeher.com/{{menuCategories.imagefolder}}/{{product.ImgFileName}}' width="64px" height="64px">-->
                 <!--</div>-->
-                <!--<div class="col col-25 text-right">-->
-                  <!--<label class="checkbox">-->
-                  <!--<input type="checkbox">-->
-                <!--</label></div>-->
-              <!--</div>-->
-
-
-              <!--<div class="row item item-icon-left item-icon-right" href="#">-->
-                <!--<i class="icon">-->
-                  <!--<img ng-src={{product.image}}>-->
-                <!--</i>-->
-                <!--<span class="col col-15 col-offset-10">-->
-                <!--{{product.name}}-->
+                <!--<div class="col col-20" style="margin-top: 10px;">-->
+                  <!--{{product.name}}-->
+                <!--</div>-->
+                <!--<div class="col col-20 text-center" style="margin-top: 10px;">-->
+                  <!--{{product.price}}-->
+                  <!--<br/>-->
+                <!--<span class="item-note">-->
+                  <!--Rs-->
                 <!--</span>-->
-                <!--<span class="item-note col col-50">-->
-                  <!--<span id="add-quantity" class="icon ion-plus-circled"></span>-->
-                  <!--<span class="badge badge-assertive">{{product.quantity}}</span>-->
-                  <!--<span id="remove-quantity" class="ion-minus-circled"></span>-->
-                  <!--&lt;!&ndash;<i class="icon ion-android-add-circle"></i>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="col col-40 text-center">-->
+                <!--<span ng-show="ordernow">-->
+                  <!--<a class="button button-icon icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)"></a>-->
+
+                <!--{{product.quantity}}-->
+
+                  <!--<a class="button button-icon icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)"></a>-->
+
+                <!--<br/>-->
+                <!--<span class="item-note">-->
+                  <!--{{product.unit}}-->
                 <!--</span>-->
-                <!--<i class="icon">-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--<div class="col col-10" style="margin-right: 8px">-->
                   <!--<label class="checkbox">-->
-                    <!--<input type="checkbox">-->
+                    <!--<input type="checkbox" ng-init="ordernow" ng-model="ordernow" ng-change="addToCart(product,ordernow,$index)">-->
                   <!--</label>-->
-                <!--</i>-->
+                <!--</div>-->
               <!--</div>-->
 
-              <div class="col col-10">
-                <img ng-src={{product.image}}>
-              </div>
-              <div class="col col-25" style="margin-top: 10px;">
-                {{product.name}}
-              </div>
 
-              <div class="col col-15 text-center" style="margin-top: 10px;">
-                {{product.price}}
-                <br/>
-                <span class="item-note">
-                  Rs
-                </span>
-              </div>
-              <div class="col col-40 text-center">
-                <span ng-show="ordernow">
-                <span id="add-quantity" class="icon positive ion-ios-plus-outline"></span>
-                {{product.quantity}}
-                <span id="remove-quantity" class="icon positive ion-ios-minus-outline"></span>
-                <br/>
-                <span class="item-note">
-                  {{product.unit}}
-                </span>
-                <span>
-              </div>
-              <div class="col col-10">
-                <label class="checkbox">
-                <input type="checkbox" ng-model="ordernow" ng-change="addToCart(product,ordernow)">
-                </label>
-              </div>
+            </ion-list>
+            <ion-infinite-scroll div id="{{key}}" ng-if ="scrollCheck(key)"
+                                 on-infinite="loadMoreProducts()"
+                                 distance="1%">
+            </ion-infinite-scroll>
 
+          </ion-scroll>
+          <!--</div>-->
 
+          <!--<ion-infinite-scroll-->
+          <!--on-infinite="loadMoreProducts(menuCategories.link,menuCategories.pageNumber,$index)"-->
+          <!--distance="1%">-->
+          <!--</ion-infinite-scroll>-->
 
-            </div>
-          </div>
         </ion-slide>
 
       </ion-slide-box>

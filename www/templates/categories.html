@@ -2,20 +2,15 @@
 
   <ion-content>
 
-    <!--<ion-list>-->
-      <!--<ion-item ng-repeat="playlist in playlists" href="#/app/categories/{{playlist.id}}">-->
-        <!--{{playlist.title}}-->
-      <!--</ion-item>-->
-    <!--</ion-list>-->
+      <ion-list>
+        <ion-item  class="item item-thumbnail-left" ng-repeat="category in categorylists" ng-click="goToStoreList(category)">
 
-
-    <div class="list">
-      <a class="item item-thumbnail-left" ng-repeat="category in categorylists" href="#/app/categories/{{category.id}}">
+        <!--<a class="item item-thumbnail-left" ng-repeat="category in categorylists" href="#/app/categories/{{category.id}}">-->
         <img ng-src={{category.image}}>
         <h2>{{category.title}}</h2>
         <p>{{category.subtitle}}</p>
-      </a>
-    </div>
-
+          </ion-item>
+      <!--</a>-->
+</ion-list>
   </ion-content>
 </ion-view>

@@ -1,0 +1,79 @@
+<ion-view view-title="Order Summary">
+  <ion-content>
+    <!--<h1>Order Page</h1>-->
+    <div id="cart-bar">
+
+        <div class="row" id="order-header" style="padding-bottom: 0px; !important;" >
+          <div class="col" style="padding-bottom: 0px; padding-left:0px;">
+            <button class="button button-icon icon assertive ion-minus-circled" ng-click="toggleShowDelete();" style="margin-top: -12px;"></button>Items</div>
+          <div class="col col-50 text-center">Quantity</div>
+          <div class="col text-right"> Price (Rs.)</div>
+        </div>
+      <ion-list id="product-list" class=" cartorder" show-delete="showDelete">
+
+        <!--<div class="cart-order-list">-->
+          <ion-scroll style="max-height: 150px">
+            <ion-item id="order-itemList" class="item-remove-animate" ng-repeat="(key, product) in cartList" >
+            <div class="col">
+              <div ng-class="(product.quantity ? 'shit-top' : '')">
+            {{x= $index+1}}) {{product.name}}
+            </div>
+            </div>
+            <div class="col col-50 text-center" ng-if="product.customQuantity">
+              {{product.customQuantity}}
+            </div>
+            <div class="col col-50 text-center" ng-if="product.quantity" ng-hide="showDelete">
+              <a class="button button-icon icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)"></a>
+
+              <!--<span id="remove-quantity" class="icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)"></span>-->
+              {{product.quantity}}
+              <!--<span id="add-quantity" class="icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)"></span>-->
+              <a class="button button-icon icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)"></a>
+              <br/>
+                <span class="item-note">
+                  {{product.unit}}
+                </span>
+            </div>
+            <div class="col text-center" style="margin-top: 10px;">
+              {{product.price || "- -"}}
+            </div>
+              <ion-delete-button class="ion-minus-circled"
+                                 ng-click="onDeleteItem(product,key)">
+              </ion-delete-button>
+
+            </ion-item>
+          </ion-scroll>
+        <!--</div>-->
+
+
+        <div class="row" id="order-header">
+          <div class="col">
+            <span class="price-text">*Prices are estimation &amp; not shared with Store</span>
+          </div>
+          <div class="col-30">
+            <b>Total:</b> {{cartTotal}}
+          </div>
+        </div>
+
+      </ion-list>
+    </div>
+
+    <div id ="address-bar">
+      <h4 class="item">Delivery Address:</h4>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">House Number, Street Name</span>
+          <input id="house-address" type="text" placeholder="Please Enter" ng-model="formData.userAddress">
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Landmark, Locality</span>
+          <input type="text" ng-model="formData.userSublocality">
+        </label>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-balanced activated" ng-click="sendSMS()">Place Order</button>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

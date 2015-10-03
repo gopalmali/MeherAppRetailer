@@ -8,6 +8,19 @@ angular.module('starter.controllers')
   var cartData = [];
 
   return {
+    getCart: function () {
+      return cartData;
+    },
+    setCart: function (cartList) {
+       cartData = angular.copy(cartList);
+      return cartData;
+    },
+
+    copyCart: function (cartList) {
+      cartData = angular.copy(cartList);
+      return cartData;
+    },
+
     getCartItem: function () {
       return cartData.length;
     },

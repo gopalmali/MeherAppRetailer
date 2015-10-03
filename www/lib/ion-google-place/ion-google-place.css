@@ -12,4 +12,6 @@
 input.ion-google-place[readonly]{
     background-color: transparent;
     cursor: text;
+    color: #ffffff;
+    font-size: 15px;
 }
