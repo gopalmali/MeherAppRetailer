@@ -29,7 +29,10 @@ angular.module('starter.controllers')
       });
 
       $scope.onDeleteItem = function(item,key) {
+        console.log($scope.cartItems)
         $scope.cartItems.splice(key, 1);
+        console.log($scope.cartItems)
+        //CartData.setCart($scope.cartItems);
       }
 
       $scope.toggleShowDelete = function() {
@@ -75,6 +78,7 @@ angular.module('starter.controllers')
       $scope.getCartTotal = function() {
         var total = 0;
         console.log($scope.cartItems);
+        CartData.setCart($scope.cartItems)
         angular.forEach($scope.cartItems, function(item){
           console.log(item);
           if ($scope.cartItems.length > 0 && item.price)
@@ -90,9 +94,9 @@ angular.module('starter.controllers')
       var options = {
         replaceLineBreaks: false, // true to replace \n by a new line, false by default
         android: {
-          intent: '' // send SMS with the native android SMS messaging
+          //intent: '' // send SMS with the native android SMS messaging
           //intent: '' // send SMS without open any other app
-          //intent: 'INTENT' // send SMS inside a default SMS app
+          intent: 'INTENT' // send SMS inside a default SMS app
         }
       };
 
@@ -114,7 +118,10 @@ angular.module('starter.controllers')
         $scope.cartMsg ="";
         if ($scope.formData.userAddress) {
           angular.forEach($scope.cartItems, function (value, key) {
-            $scope.cartMsg = $scope.cartMsg + (value.quantity + value.unit + " " + value.name + "-" + value.price + "Rs" + "\n");
+            if(value.quantity)
+              $scope.cartMsg = $scope.cartMsg + (value.quantity + value.unit + " " + value.name + "-" + "\n");
+            else
+              $scope.cartMsg = $scope.cartMsg + (value.name + "-" + "\n");
           });
           $scope.cartMsg = $scope.cartMsg + "Address:" + "\n";
           $scope.cartMsg = $scope.cartMsg + $scope.formData.userAddress + "\n" + $scope.formData.userSublocality;
@@ -134,8 +141,7 @@ angular.module('starter.controllers')
             url: 'http://getmeher.com:3000/orders',
             method: "POST",
             data: $scope.orderPost
-          })
-              .then(function(response) {
+          }).then(function(response) {
                 // success
                 console.log(response);
               },
@@ -147,20 +153,20 @@ angular.module('starter.controllers')
 
 
           document.addEventListener("deviceready", function () {
-            //$cordovaSms
-            //    .send('09820272106', $scope.cartMsg, options)
-            //    .then(function () {
-            //         alert('Sending Order');
-            //      // Success! SMS was sent
-            //
-            //    }, function (error) {
-            //      alert(error);
-            //      // An error occurred
-            //
-            //    });
+            $cordovaSms
+                .send(StoreSelected.mobile, $scope.cartMsg, options)
+                .then(function () {
+                     alert('Sending Order');
+                  // Success! SMS was sent
+                  $location.url("/app/postorder");
+
+                }, function (error) {
+                  alert(error);
+                  // An error occurred
+
+                });
           });
 
-          $location.url("/app/postorder");
 
         }
         else{

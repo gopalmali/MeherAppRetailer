@@ -7,7 +7,7 @@ angular.module('starter.controllers')
       $scope.cartItems = CartData.getCart();
       $scope.StoreSelected = StoreData.getStore();
       $scope.CallTel = function(tel) {
-        window.open('tel:'+tel)
+        window.open('tel:'+'+91'+tel)
         //window.location.href = 'tel:'+ tel;
       }
 

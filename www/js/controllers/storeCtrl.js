@@ -3,8 +3,7 @@
  */
 angular.module('starter.controllers')
 
-    .controller('storeCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicLoading,$ionicSlideBoxDelegate) {
-
+    .controller('storeCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicLoading,$ionicSlideBoxDelegate,$location) {
       $scope.storelistId = ($stateParams.storelistId);
       $scope.storeId = ($stateParams.storeId);
       $scope.cartItems = CartData.getCart();
@@ -14,13 +13,16 @@ angular.module('starter.controllers')
       $scope.storeCategory = window.category;
       $scope.productCatalog = window.category.productCategory;
 
+      $scope.CallTel = function(tel) {
+        window.open('tel:'+tel)
+      }
+
       $scope.$watchCollection('cartItems', function(newValue, oldValue) {
         if (newValue !== oldValue)
         {
           CartData.setCart(newValue);
         }
       });
-
 
       $scope.updateCart = function(productItem) {
         console.log("UPDATE!!!!!!!!")
@@ -78,9 +80,14 @@ angular.module('starter.controllers')
         console.log($scope.cartItems);
       }
 
+      $scope.showProduct = function(storelistId,storeId,sublink,productLink) {
+        $location.path('/app/categories/'+storelistId+'/'+storeId+'/'+sublink+'/'+productLink);
+      }
+
+
       $scope.addToCart = function(productItem,checkStatus,index) {
         if(checkStatus){
-          console.log("adding")
+          console.log("adding");
           $scope.cartItems.push(productItem);
           console.log(CartData.getCart());
         }
@@ -97,17 +104,6 @@ angular.module('starter.controllers')
           console.log(CartData.getCart());
         }
       };
-
-
-      //$scope.loadAllProducts = function(productCategory,pageNumber,index) {
-      //  $scope.getProducts(productCategory,pageNumber).then(function (response) {
-      //    angular.forEach(response.data, function(value, key) {
-      //      $scope.productCatalog[index].products.push(value);
-      //    });
-      //    $scope.productCatalog[index].pageNumber ++;
-      //  })
-      //  $scope.$broadcast('scroll.infiniteScrollComplete');
-      //};
 
 
       $scope.scrollCheck = function(index) {

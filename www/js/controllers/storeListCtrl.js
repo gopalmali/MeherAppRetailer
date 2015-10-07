@@ -33,12 +33,8 @@ angular.module('starter.controllers')
               }
               else
                 $scope.storeMsg = "Currently not serving in your area !!";
-
-              //console.log($scope.storeList)
             }, function (response) {
               $scope.storeMsg = "Error retrieving data";
-              // called asynchronously if an error occurs
-              // or server returns response with an error status.
             });
       }
 
@@ -64,6 +60,8 @@ angular.module('starter.controllers')
       $scope.goToStore = function(storelistId,storeInfo, distKM) {
         StoreData.setStore(storeInfo);
         StoreData.setStoreDistance(distKM);
+        $scope.cartItems = CartData.getCart();
+        console.log($scope.cartItems);
         if ($scope.cartItems.length > 0)
         {
           $scope.showAlertGoToCart();

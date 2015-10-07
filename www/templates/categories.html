@@ -1,16 +1,11 @@
 <ion-view view-title="Meher">
-
   <ion-content>
-
-      <ion-list>
-        <ion-item  class="item item-thumbnail-left" ng-repeat="category in categorylists" ng-click="goToStoreList(category)">
-
-        <!--<a class="item item-thumbnail-left" ng-repeat="category in categorylists" href="#/app/categories/{{category.id}}">-->
+    <ion-list>
+      <ion-item  class="item item-thumbnail-left" ng-repeat="category in categorylists" ng-click="goToStoreList(category)">
         <img ng-src={{category.image}}>
         <h2>{{category.title}}</h2>
         <p>{{category.subtitle}}</p>
-          </ion-item>
-      <!--</a>-->
-</ion-list>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

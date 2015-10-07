@@ -39,6 +39,34 @@
     float:none;
 }
 
+#product-display .slider {
+    height: 250px; /* slider height you want */
+}
+
+#product-display .slider-slide {
+    color: #000;
+    background-color: #fff;
+    height: 100%;
+}
+
+
+.hyphenate {
+    /* Careful, this breaks the word wherever it is without a hyphen */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    /* Adds a hyphen where the word breaks */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+
+.hide-text{
+    overflow: hidden;
+}
+
 .buy-text{
     float: right;
     color: #aaa;
@@ -46,6 +74,7 @@
 }
 .price-text{
     font-size: 12px;
+    white-space: nowrap;
 }
 #order-itemList .item-content{
     display: -webkit-box;

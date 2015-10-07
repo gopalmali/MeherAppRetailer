@@ -5,7 +5,8 @@ angular.module('starter.controllers')
 
     .controller('CategoriesCtrl', function($scope,$location,$http) {
       $scope.categorylists = [];
-      $scope.categorylists = [
+      $scope.categoryTemp = [];
+      $scope.categoryTemp = [
         {
           "title": "Grocery",
           "subtitle": "Instantly order bread,butter,biscuits",
@@ -81,7 +82,7 @@ angular.module('starter.controllers')
               "pageNumber": 1,
               "loadMore": true,
               "link": "leafyvegetables",
-              "imageolder": "leafyvegetables"
+              "imagefolder": "leafyvegetables"
             },
             {
               "title": "Sprouts",
@@ -89,18 +90,9 @@ angular.module('starter.controllers')
               "pageNumber": 1,
               "loadMore": true,
               "link": "sproutsvegetables",
-              "imageolder": "sproutsvegetables"
+              "imagefolder": "sproutsvegetables"
 
             }
-          ]
-        },
-        {
-          "title": "Restaurants",
-          "subtitle": "Order your favorite food right now!",
-          "image": "img/resturant.png",
-          "id": "Restaurants",
-          "type": "restaurants",
-          "productCategory": [
           ]
         },
         {
@@ -109,39 +101,53 @@ angular.module('starter.controllers')
           "image": "img/electronic.png",
           "id": 4,
           "link": "shop-electronics",
-          "type": "general",
+          "type": "electronics",
           "productCategory": [
             {
-              "title": "Fruits",
+              "title": "Mobile",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
-              "link": "fruits",
-              "imageolder": "fruits"
+              "link": "mobiles",
+              "deeplink": "mobiledescriptionslink",
+              "imagefolder": "mobile"
             },
             {
-              "title": "vegetables",
+              "title": "Tv",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
-              "link": "vegetables",
-              "imageolder": "vegetables"
+              "link": "tvs",
+              "deeplink": "tvdescriptionslink",
+              "imagefolder": "tv"
             },
             {
-              "title": "leafy vegetables",
+              "title": "Ac",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
-              "link": "leafyvegetables",
-              "imageolder": "leafyvegetables"
+              "link": "acs",
+              "deeplink": "acsdescriptionslink",
+              "imagefolder": "ac"
             },
             {
-              "title": "Sprouts",
+              "title": "Refrigerator",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
-              "link": "sproutsvegetables",
-              "imageolder": "sproutsvegetables"
+              "link": "refrigerators",
+              "deeplink": "refrigeratordescriptionslink",
+              "imagefolder": "refri"
+
+            },
+            {
+              "title": "Washing-Machine",
+              "products": [],
+              "pageNumber": 1,
+              "loadMore": true,
+              "link": "wmachines",
+              "deeplink": "wmachinedescriptionslink",
+              "imagefolder": "washing"
 
             }
           ]
@@ -158,19 +164,29 @@ angular.module('starter.controllers')
         }
       ];
 
-      //$http({
-      //  method: 'GET',
-      //  url: 'http://getmeher.com:3000/categorylists'
-      //}).then(function successCallback(response) {
-      //  console.log(response)
-      //  if (response.data.length> 0)
-      //  $scope.categorylists = response.data;
-      //  else
-      //    alert("unable to connect");
-      //}, function errorCallback(response) {
-      //  console.log(response)
-      //  alert("unable to connect");
-      //});
+      angular.copy($scope.categoryTemp, $scope.categorylists);
+
+      $scope.$watchCollection('categoryTemp', function(newValue, oldValue) {
+        if (newValue !== oldValue)
+        {
+          console.log("watch triggered !!");
+          angular.copy($scope.categoryTemp, $scope.categorylists);
+        }
+      });
+
+      $http({
+        method: 'GET',
+        url: 'http://getmeher.com:3000/categorylists'
+      }).then(function successCallback(response) {
+        console.log(response)
+        if (response.data.length> 0)
+        $scope.categoryTemp = response.data;
+        else
+          alert("unable to connect");
+      }, function errorCallback(response) {
+        console.log(response)
+        alert("unable to connect");
+      });
 
 
       $scope.goToStoreList = function(category) {

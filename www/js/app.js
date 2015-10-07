@@ -57,6 +57,15 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
+          .state('app.showcase', {
+            url: '/categories/:storelistId/:storeId/:subProductId/:productId',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/showCase.html',
+                controller: 'showCaseCtrl'
+              }
+            }
+          })
 
           .state('app.storelist', {
             url: '/categories/:storelistId',
@@ -76,7 +85,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-      .state('app.order', {
+      .state('app.orderPage', {
         url: '/order',
         views: {
           'menuContent': {

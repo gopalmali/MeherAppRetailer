@@ -1,6 +1,6 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">Login</h1>
+    <h1 class="title">Add Store</h1>
     <div class="buttons">
       <button class="button button-clear" ng-click="closeLogin()">Close</button>
     </div>
@@ -9,15 +9,28 @@
     <form ng-submit="doLogin()">
       <div class="list">
         <label class="item item-input">
-          <span class="input-label">Username</span>
+          <span class="input-label">Store Name</span>
           <input type="text" ng-model="loginData.username">
         </label>
         <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
+          <span class="input-label">Address</span>
+          <input type="text" ng-model="loginData.address">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Mobile</span>
+          <input type="text" ng-model="loginData.mobile">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Category</span>
+          <select ng-model="loginData.type">
+            <option selected>Grocery</option>
+            <option>Fruits</option>
+            <option>Electronics</option>
+            <option>Pharmacy</option>
+          </select>
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+          <button class="button button-block button-positive" type="submit">Send</button>
         </label>
       </div>
     </form>
