@@ -24,7 +24,7 @@ angular.module('starter.controllers')
               "imagefolder": "images-groceries"
             },
             {
-              "title": "Packet Food",
+              "title": "Packet-Food",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
@@ -32,7 +32,7 @@ angular.module('starter.controllers')
               "imagefolder": "packetfoods"
             },
             {
-              "title": "Personal Care",
+              "title": "Personal-Care",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
@@ -40,7 +40,7 @@ angular.module('starter.controllers')
               "imagefolder": "personalcares"
             },
             {
-              "title": "House Hold",
+              "title": "House-Hold",
               "products": [
 
               ],
@@ -77,7 +77,7 @@ angular.module('starter.controllers')
               "imagefolder": "vegetables"
             },
             {
-              "title": "leafy vegetables",
+              "title": "leafy-vegetables",
               "products": [],
               "pageNumber": 1,
               "loadMore": true,
@@ -93,6 +93,15 @@ angular.module('starter.controllers')
               "imagefolder": "sproutsvegetables"
 
             }
+          ]
+        },
+        {
+          "title": "Restaurants",
+          "subtitle": "Order your favorite food right now!",
+          "image": "img/resturant.png",
+          "id": "Restaurants",
+          "type": "restaurants",
+          "productCategory": [
           ]
         },
         {
@@ -180,7 +189,7 @@ angular.module('starter.controllers')
       }).then(function successCallback(response) {
         console.log(response)
         if (response.data.length> 0)
-        $scope.categoryTemp = response.data;
+          $scope.categoryTemp = response.data;
         else
           alert("unable to connect");
       }, function errorCallback(response) {

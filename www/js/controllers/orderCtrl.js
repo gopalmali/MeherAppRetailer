@@ -132,7 +132,7 @@ angular.module('starter.controllers')
         };
           $scope.orderPost.user = {
             id:"OrderUser",
-            Address:$scope.formData.userAddress + ",-," + $scope.formData.userSublocality
+            Address:$scope.formData.userAddress + "," + $scope.formData.userSublocality
           };
 
           console.log($scope.orderPost);
@@ -154,7 +154,7 @@ angular.module('starter.controllers')
 
           document.addEventListener("deviceready", function () {
             $cordovaSms
-                .send(StoreSelected.mobile, $scope.cartMsg, options)
+                .send($scope.StoreSelected.mobile, $scope.cartMsg, options)
                 .then(function () {
                      alert('Sending Order');
                   // Success! SMS was sent
