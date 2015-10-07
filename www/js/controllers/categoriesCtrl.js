@@ -96,15 +96,6 @@ angular.module('starter.controllers')
           ]
         },
         {
-          "title": "Restaurants",
-          "subtitle": "Order your favorite food right now!",
-          "image": "img/resturant.png",
-          "id": "Restaurants",
-          "type": "restaurants",
-          "productCategory": [
-          ]
-        },
-        {
           "title": "Electronics",
           "subtitle": "Get best deal on mobile,TV from local shops",
           "image": "img/electronic.png",
