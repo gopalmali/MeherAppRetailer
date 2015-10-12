@@ -23,7 +23,6 @@
     color: #444;
     position: relative;
     z-index: 2;
-    /*display: block;*/
     margin: -1px;
     padding: 8px;
     border-width: 1px;
@@ -54,7 +53,6 @@
     /* Careful, this breaks the word wherever it is without a hyphen */
     overflow-wrap: break-word;
     word-wrap: break-word;
-
     /* Adds a hyphen where the word breaks */
     -webkit-hyphens: auto;
     -ms-hyphens: auto;

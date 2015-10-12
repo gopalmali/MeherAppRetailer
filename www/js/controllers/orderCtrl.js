@@ -118,10 +118,15 @@ angular.module('starter.controllers')
         $scope.cartMsg ="";
         if ($scope.formData.userAddress) {
           angular.forEach($scope.cartItems, function (value, key) {
-            if(value.quantity)
-              $scope.cartMsg = $scope.cartMsg + (value.quantity + value.unit + " " + value.name + "-" + "\n");
+            if(value.quantity){
+              $scope.cartMsg = $scope.cartMsg + value.quantity;
+              if (value.unit)
+                $scope.cartMsg = $scope.cartMsg + value.unit + " " + value.name + "-" + "\n";
+              else
+                $scope.cartMsg = $scope.cartMsg  + " " + value.name + "-" + "\n";
+            }
             else
-              $scope.cartMsg = $scope.cartMsg + (value.name + "-" + "\n");
+              $scope.cartMsg = $scope.cartMsg + '-'+value.name + "-" + "\n";
           });
           $scope.cartMsg = $scope.cartMsg + "Address:" + "\n";
           $scope.cartMsg = $scope.cartMsg + $scope.formData.userAddress + "\n" + $scope.formData.userSublocality;
@@ -150,7 +155,8 @@ angular.module('starter.controllers')
                 console.log(response);
               });
 
-
+          $scope.cartMsg = $scope.cartMsg +'\n'+"Ordered Using Meher App - https://goo.gl/cxqKEc";
+          console.log($scope.cartMsg);
 
           document.addEventListener("deviceready", function () {
             $cordovaSms
