@@ -23,7 +23,9 @@
     "org.apache.cordova.geolocation",
     "cordova-plugin-geolocation",
     "cordova-plugin-whitelist",
-    "cordova-plugin-whitelist@1.0.0"
+    "cordova-plugin-whitelist@1.0.0",
+    "cordova.plugins.diagnostic",
+    "org.apache.cordova.device"
   ],
   "cordovaPlatforms": [
     "android"

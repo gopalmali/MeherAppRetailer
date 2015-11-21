@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.meherapp.meher" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Meher</name>
+<widget id="com.meherretailapp.meherretail" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Meher Stores</name>
   <description>
 MEHER - Taking Care of your gross needs!
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+    <author email="info@getmeher.com" href="http://ionicframework.com/">
+        Meher Team
     </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -14,10 +14,8 @@ MEHER - Taking Care of your gross needs!
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
-  <preference name="AutoHideSplashScreen" value="false"/>
-  <preference name="auto-hide-splash-screen" value="false"/>
   <preference name="SplashScreen" value="screen"/>
-  <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="SplashScreenDelay" value="0"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
@@ -71,5 +69,6 @@ MEHER - Taking Care of your gross needs!
   </platform>
   <plugin name="cordova-plugin-whitelist" spec="~1.1.0"/>
   <allow-intent href="tel:*"/>
+    <allow-intent href="mailto:*" />
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>

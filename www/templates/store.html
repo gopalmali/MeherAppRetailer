@@ -15,11 +15,15 @@
     <div class="row">
       <div class="col">
         <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-          {{StoreSelected.address}}</p>
-        <div style="color: #AAAAAA;">
+          <span>
+              <i class="ion-ios-home" style="font-size: 22px;color: #C6C6C6;"></i>
+            {{StoreSelected.address}}
+            </span>
+          </p>
+        <div style="color: #979797;">
             <span>
               <i class="ion-android-bicycle" style="font-size: 22px;"></i>
-            {{StoreDistance}} KM Away.
+            {{StoreDistance}} KM Away
             </span>
               <span style="float: right;" >
               Delivers in:
@@ -31,11 +35,14 @@
     </div>
 
     <!--</br></br>-->
-    <div class="text-center">
-      <h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>
-    </div>
+    <!--<div class="text-center">-->
+      <!--<h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>-->
+    <!--</div>-->
     <div id="customize-order">
-      <div class="bar bar-header item-input-inset addcustom">
+      <div class="text-center" style="margin-bottom:0px;margin-top: 2px;font-weight: bold;">
+        <span>Type Products Below </span><!-- ngIf: storeCategory.type=='general' --><span ng-if="storeCategory.type=='general'" class="">or Select From Menu</span><!-- end ngIf: storeCategory.type=='general' -->
+      </div>
+      <div class="bar bar-header item-input-inset addcustom" style="margin-top: -3px;">
         <div class="col-50">
           <label class="item-input-wrapper reverse-wrapper">
             <i class="icon ion-compose"></i>
@@ -71,7 +78,7 @@
 
 
     <div id="menu-view" ng-if="storeCategory.type=='general'">
-      <ion-slide-box slide-tabs-scrollable="true"  show-pager="false" ion-slide-tabs>
+      <ion-slide-box on-slide-changed="slideHasChanged($index)" slide-tabs-scrollable="true"  show-pager="false" ion-slide-tabs>
         <ion-slide  ng-repeat="(key, menuCategories) in productCatalog" ion-slide-tab-label="{{menuCategories.title}}">
           <div class="row item item-divider">
             <span class="col">{{menuCategories.title}}</span>
@@ -85,7 +92,7 @@
                   <img ng-src='http://images.getmeher.com/{{menuCategories.imagefolder}}/{{product.ImgFileName}}' width="64px" height="64px">
                 </div>
                 <div class="col hyphenate" style="margin-top: 12px;white-space: normal;padding-bottom: 10px;
-" ng-class="{'hide-text': ordernow}" >
+" ng-class="{'hide-text': product.ordernow}" >
                   {{product.name | limitTo:32}}
                 <span style="display: block;color: #aaa;font-size: 14px;" ng-if="product.subtitle">
                 ({{product.subtitle}})
@@ -99,7 +106,7 @@
                 </div>
 
                 <div class="col text-center" style="margin-top: 3px">
-                <span ng-show="ordernow">
+                <span ng-show="product.ordernow">
                 <a class="button button-icon icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)" style="padding-right: 2px!important;"></a>
                 {{product.quantity}}
                 <a class="button button-icon icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)" style="padding-right: 2px!important;"></a>
@@ -110,7 +117,8 @@
                 </div>
                 <div class="col col-10" style="margin-right: 12px;margin-top: 3px">
                   <label class="checkbox">
-                    <input type="checkbox" ng-init="ordernow" ng-model="ordernow" ng-change="addToCart(product,ordernow,$index)">
+                    <!--<input type="checkbox" ng-init="cartItems.length > 0 ? checkExisting(product): false" ng-model="product.ordernow" ng-change="addToCart(product,product.ordernow,$index)">-->
+                    <input type="checkbox" ng-model="product.ordernow" ng-change="addToCart(product,product.ordernow,$index)">
                   </label>
                 </div>
               </ion-item>
@@ -142,7 +150,7 @@
                   <img ng-src='http://images.getmeher.com/{{menuCategories.imagefolder}}/{{product.image}}' width="64px" height="64px">
                 </div>
                 <div class="col hyphenate" style="margin-top: 12px;white-space: normal;padding-bottom: 10px;
-" ng-class="{'hide-text': ordernow}" >
+" ng-class="{'hide-text': product.ordernow}" >
                   {{product.name }}
                 <span style="display: block;color: #aaa;font-size: 14px;">
                   Rs. {{product.price | number:0}} /-
@@ -157,7 +165,7 @@
 
 
                 <!--<div class="col text-center" style="margin-top: 3px">-->
-                <!--<span ng-show="ordernow">-->
+                <!--<span ng-show="product.ordernow">-->
                 <!--<a class="button button-icon icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)" style="padding-right: 2px!important;"></a>-->
                 <!--{{product.quantity}}-->
                 <!--<a class="button button-icon icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)" style="padding-right: 2px!important;"></a>-->

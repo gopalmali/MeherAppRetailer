@@ -1,0 +1,12 @@
+<ion-view view-title="Active Orders">
+  <ion-content>
+    <ion-list>
+      <ion-item  class="item item-thumbnail-left" ng-repeat="order in activeOrderLists" ng-click="goToorder(order)">
+        <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-4/128/Shopping-cart-full-icon.png">
+        <h2>{{order.user}}</h2>
+        <p>{{order.address}}</p>
+        <span class="badge badge-assertive">{{order.order.orderitem.length}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

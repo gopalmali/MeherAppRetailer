@@ -8,8 +8,8 @@ angular.module('starter.controllers')
       $scope.categoryTemp = [];
       $scope.categoryTemp = [
         {
-          "title": "Grocery",
-          "subtitle": "Instantly order bread,butter,biscuits",
+          "title": "Grocery ",
+          "subtitle": "Instantly order bread, butter, biscuits",
           "image": "img/grocery.jpg",
           "id": "Grocery",
           "link": "shop-groceries",

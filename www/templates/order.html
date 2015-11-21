@@ -13,7 +13,7 @@
 
         <!--<div class="cart-order-list">-->
           <ion-scroll style="max-height: 200px">
-            <ion-item id="order-itemList" class="item-remove-animate" ng-repeat="(key, product) in cartList track by $index" >
+            <ion-item id="order-itemList" class="item-remove-animate" ng-repeat="(key, product) in cartItems track by $index" >
 
               <div class="col hyphenate" style="white-space: normal;" ng-class="(showDelete ? 'col-66' : '')">
               <div ng-class="(product.quantity ? 'shit-top' : '')">
@@ -79,7 +79,7 @@
       </label>
     </div>
     <div class="padding">
-      <button class="button button-block button-balanced activated" ng-click="sendSMS()">Place Order</button>
+      <button class="button button-block button-balanced activated" ng-click="retriveLocal()">Place Order</button>
     </div>
   </div>
 

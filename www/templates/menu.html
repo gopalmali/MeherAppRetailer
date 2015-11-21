@@ -9,6 +9,11 @@
         </button>
       </ion-nav-buttons>
 
+      <ion-nav-buttons side="right">
+        <a class="button icon-right ion-speakerphone button-balanced" href="#/app/share">Share</a>
+      </ion-nav-buttons>
+
+
     </ion-nav-bar>
 
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -23,14 +28,17 @@
         <ion-item menu-close ng-click="login()">
           Register
         </ion-item>
-        <ion-item menu-close href="#/app/search">
+        <ion-item menu-close href="#/app/about">
           About
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
+        <ion-item menu-close href="#/app/contact">
           Contact
         </ion-item>
         <ion-item menu-close href="#/app/categories">
           Categories
+        </ion-item>
+        <ion-item  class="item-icon-right" nav-clear menu-close href="#/app/share">
+          Share<i class="icon icon-right ion-chevron-right ion-accessory"></i>
         </ion-item>
       </ion-list>
     </ion-content>

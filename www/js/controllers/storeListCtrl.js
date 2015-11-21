@@ -22,6 +22,7 @@ angular.module('starter.controllers')
       });
 
 
+
       function fetchStoreList(lat,lng) {
         console.log("fetchStoreList called" + $scope.pageNumber);
         $scope.pageNumber = $scope.pageNumber+1;
@@ -58,20 +59,23 @@ angular.module('starter.controllers')
       };
 
       $scope.goToStore = function(storelistId,storeInfo, distKM) {
-        StoreData.setStore(storeInfo);
-        StoreData.setStoreDistance(distKM);
+        var currentStore = StoreData.getStore();
         $scope.cartItems = CartData.getCart();
         console.log($scope.cartItems);
-        if ($scope.cartItems.length > 0)
+        if ($scope.cartItems.length > 0 && currentStore.name !==storeInfo.name)
         {
           $scope.showAlertGoToCart();
         }
         else{
+          StoreData.setStore(storeInfo);
+          StoreData.setStoreDistance(distKM);
           $location.url("/app/categories/"+storelistId+"/"+storeInfo.name);
         }
       }
 
       $scope.loadMore = function() {
+        console.log("yessss")
+        console.log($scope.storeList)
         if ($scope.storeList.length>0){
           console.log("loadmore");
           $scope.pageNumber = $scope.pageNumber + 1;
@@ -85,6 +89,9 @@ angular.module('starter.controllers')
                 // or server returns response with an error status.
               });
           }
+        else{
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
       };
 
       $scope.$on('$stateChangeSuccess', function() {

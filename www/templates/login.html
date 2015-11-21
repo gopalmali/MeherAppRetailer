@@ -1,38 +1,45 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Add Store</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
+<ion-view view-title="Login">
+
+<!--<ion-header-bar>-->
+    <!--<h1 class="title">Login</h1>-->
+    <!--<div class="buttons">-->
+      <!--<button class="button button-clear" ng-click="closeContact()">Close</button>-->
+    <!--</div>-->
+  <!--</ion-header-bar>-->
   <ion-content>
-    <form ng-submit="doLogin()">
+    <div>
+    <div class="row">
+      <div class="col text-center">
+        <h3>Login</h3>
+      </div>
+    </div>
+      <form ng-submit="sendOPT()">
       <div class="list">
         <label class="item item-input">
-          <span class="input-label">Store Name</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Address</span>
-          <input type="text" ng-model="loginData.address">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Mobile</span>
-          <input type="text" ng-model="loginData.mobile">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Category</span>
-          <select ng-model="loginData.type">
+          <span class="input-label">Select Store Category</span>
+          <select ng-model="loginData.categoty">
             <option selected>Grocery</option>
             <option>Fruits</option>
             <option>Electronics</option>
             <option>Pharmacy</option>
           </select>
         </label>
+
+        <label class="item item-input">
+          <span class="input-label">Mobile Number +91</span>
+          <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="loginData.mobile">
+        </label>
+
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Send</button>
+          <button class="button button-block button-balanced" type="submit">Login</button>
         </label>
       </div>
     </form>
+      <label class="item">
+        <div class="text-center">Store not registered yet?</div>
+        <button class="button button-block button-energized" ng-click="login()">Register your store</button>
+      </label>
+    </div>
+
   </ion-content>
 </ion-modal-view>

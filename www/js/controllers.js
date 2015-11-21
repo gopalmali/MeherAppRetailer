@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-    .controller('LoadCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, $http,CartData,$location) {
+    .controller('LoadCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, $http,CartData,$location,$cordovaDevice) {
       $scope.notifications = [];
       $scope.cartList=CartData.getCart();
       $scope.grandTotal;
@@ -32,6 +32,9 @@ angular.module('starter.controllers', [])
       // call to register automatically upon device ready
       ionPlatform.ready.then(function (device) {
         //alert(device);
+        $scope.devideID  = $cordovaDevice.getUUID();
+        window.localStorage['deviceID'] = $scope.devideID;
+
         $scope.register();
       });
 
@@ -145,7 +148,8 @@ angular.module('starter.controllers', [])
         // Create a random userid to store with it
         var onSuccess = function(position) {
           window.currentLoc = position;
-          var user = { user: 'Auser ' + position.coords.latitude +'-'+position.coords.longitude , type: type, token: $scope.regId };
+          //var user = {deviceID: $scope.devideID, user: 'Auser ' + position.coords.latitude +'-'+position.coords.longitude , type: type, token: $scope.regId };
+          var user = {deviceID: $scope.devideID, user: $scope.devideID , type: type, token: $scope.regId };
           //alert("Post token for registered device with data " + JSON.stringify(user));
           //Log.d("meher" , "Post token for registered device with data")
 
@@ -227,7 +231,7 @@ angular.module('starter.controllers', [])
       $scope.loginData = {};
 
       // Create the login modal that we will use later
-      $ionicModal.fromTemplateUrl('templates/login.html', {
+      $ionicModal.fromTemplateUrl('templates/register.html', {
         scope: $scope
       }).then(function(modal) {
         $scope.modal = modal;
@@ -246,9 +250,8 @@ angular.module('starter.controllers', [])
       // Perform the login action when the user submits the login form
       $scope.doLogin = function() {
         console.log('Doing login', $scope.loginData);
-        $window.location = "mailto:info@getmeher.com?subject=Add Store&body="+$scope.loginData;
-
-
+        var body = JSON.stringify($scope.loginData);
+        $window.location = "mailto:info@getmeher.com?subject=Add Store&body="+body;
         $timeout(function() {
           $scope.closeLogin();
         }, 1000);

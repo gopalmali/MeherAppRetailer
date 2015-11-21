@@ -7,7 +7,9 @@ angular.module('ion-google-place', [])
       '$rootScope',
       '$document',
       '$cordovaGeolocation',
-      function ($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document,$cordovaGeolocation) {
+      '$state',
+      '$window',
+      function ($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document,$cordovaGeolocation,$state,$window) {
         return {
           require  : '?ngModel',
           restrict : 'E',
@@ -91,23 +93,64 @@ angular.module('ion-google-place', [])
 
 
               scope.setCurrentLocation = function(){
-                window.subLocality = null;
-                var location = {
-                  formatted_address: 'getting current location...'
-                };
-                ngModel.$setViewValue(location);
-                element.attr('value', location.formatted_address);
-                el.element.css('display', 'none');
-                $ionicBackdrop.release();
-                getLocation()
-                    .then(reverseGeocoding)
-                    .then(function(location){
-                      ngModel.$setViewValue(location);
-                      element.attr('value', location.formatted_address);
-                      ngModel.$render();
-                      el.element.css('display', 'none');
-                      $ionicBackdrop.release();
-                    });
+                cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+                  if (enabled){
+                    window.subLocality = null;
+                    var location = {
+                      formatted_address: 'getting current location...'
+                    };
+                    ngModel.$setViewValue(location);
+                    element.attr('value', location.formatted_address);
+                    el.element.css('display', 'none');
+                    $ionicBackdrop.release();
+                    getLocation()
+                        .then(reverseGeocoding)
+                        .then(function(location){
+                          ngModel.$setViewValue(location);
+                          element.attr('value', location.formatted_address);
+                          ngModel.$render();
+                          el.element.css('display', 'none');
+                          $ionicBackdrop.release();
+                        });
+                  }
+                  else{
+                    alert("Please Enable Location Services")
+                    if (ionic.Platform.isAndroid()){
+                      cordova.plugins.diagnostic.switchToLocationSettings(function(){
+                        scope.setCurrentLocation();
+                      }, function(error){
+                        alert("Error Occurred !")
+                      });
+                    }
+                    else{
+                      cordova.plugins.diagnostic.switchToSettings(function(){
+                        scope.setCurrentLocation();
+                      }, function(error){
+                        alert("Error Occurred !")
+                      });
+                    }
+                  }
+                }, function(error){
+                  alert("Error Occurred !")
+                });
+                //alert("got here !")
+                //window.subLocality = null;
+                //var location = {
+                //  formatted_address: 'getting current location...'
+                //};
+                //ngModel.$setViewValue(location);
+                //element.attr('value', location.formatted_address);
+                //el.element.css('display', 'none');
+                //$ionicBackdrop.release();
+                //getLocation()
+                //    .then(reverseGeocoding)
+                //    .then(function(location){
+                //      ngModel.$setViewValue(location);
+                //      element.attr('value', location.formatted_address);
+                //      ngModel.$render();
+                //      el.element.css('display', 'none');
+                //      $ionicBackdrop.release();
+                //    });
               };
 
               scope.$watch('searchQuery', function (query) {
@@ -182,6 +225,18 @@ angular.module('ion-google-place', [])
               }
             };
 
+
+            function elseLocation() {
+              return $q(function (resolve, reject) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                    alert(position);
+                    resolve(position)
+                  }, function (e) {
+                    alert(e);
+                    reject(error);
+                  }, {});
+              })}
+
             function getLocation() {
               return $q(function (resolve, reject) {
                 var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -190,6 +245,9 @@ angular.module('ion-google-place', [])
                     .then(function (position) {
                       resolve(position);
                     }, function(error) {
+                      ////reject(error);
+                      //alert("error");
+                      document.location.href = 'index.html';
                       reject(error);
                     });
               });

@@ -3,7 +3,7 @@
  */
 angular.module('starter.controllers')
 
-    .controller('orderCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicPopup,$timeout,$cordovaSms,$location,$window) {
+    .controller('orderCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicPopup,$timeout,$cordovaSms,$location,$window,$cordovaSQLite) {
       //$scope.cartList=CartData.getCart();
       $scope.cartMsg="";
       $scope.cartItems = CartData.getCart();
@@ -13,6 +13,20 @@ angular.module('starter.controllers')
       $scope.formData.userSublocality = $window.subLocality.formatted_address;
       $scope.orderPost={};
       $scope.showDelete=false;
+      $scope.addnotAvailble=false;
+
+      var db = $cordovaSQLite.openDB("my1.db");
+      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_user (deviceID text, mobile integer,type text,addLine1 text,addLine2 text)");
+
+
+
+
+      $scope.$on("$ionicView.enter", function () {
+        console.log("!!!!!!!!! dekho");
+        console.log(CartData.getCart());
+        $scope.cartItems = CartData.getCart();
+        $scope.cartTotal = $scope.getCartTotal();
+      });
 
       $scope.$watchCollection('cartItems', function(newValue, oldValue) {
         if (newValue !== oldValue)
@@ -78,7 +92,7 @@ angular.module('starter.controllers')
       $scope.getCartTotal = function() {
         var total = 0;
         console.log($scope.cartItems);
-        CartData.setCart($scope.cartItems)
+        //CartData.setCart($scope.cartItems)
         angular.forEach($scope.cartItems, function(item){
           console.log(item);
           if ($scope.cartItems.length > 0 && item.price)
@@ -88,6 +102,7 @@ angular.module('starter.controllers')
         })
         return total;
       };
+
       $scope.cartTotal = $scope.getCartTotal();
 
 
@@ -112,11 +127,39 @@ angular.module('starter.controllers')
         });
       };
 
+      $scope.retriveLocal = function() {
+        var query = "SELECT * FROM Meher_user WHERE deviceId = ?";
+        $cordovaSQLite.execute(db,query,[window.localStorage['deviceID']]).then(function(result) {
+          if(result.rows.length > 0) {
+            $scope.localUserMobile=JSON.stringify(result.rows.item(0).mobile);
+            $scope.localUserMobile=JSON.stringify(result.rows.item(0).mobile);
+            window.meherLoggedin= true;
+            $scope.sendSMS();
+          } else {
+            window.meherLoggedin = false;
+            alert("new user");
+            $location.url("/app/login");
+            //alert("NO ROWS EXIST");
+          }
+        }, function(error) {
+          console.error(error);
+        });
+      };
+
+
+      $scope.saveLocally = function() {
+        //alert("saving");
+      }
+
+
 
       $scope.sendSMS = function() {
+
+
         console.log($scope.formData.userAddress);
         $scope.cartMsg ="";
         if ($scope.formData.userAddress) {
+          $scope.saveLocally()
           angular.forEach($scope.cartItems, function (value, key) {
             if(value.quantity){
               $scope.cartMsg = $scope.cartMsg + value.quantity;
@@ -130,16 +173,29 @@ angular.module('starter.controllers')
           });
           $scope.cartMsg = $scope.cartMsg + "Address:" + "\n";
           $scope.cartMsg = $scope.cartMsg + $scope.formData.userAddress + "\n" + $scope.formData.userSublocality;
-
           $scope.orderPost.store = $scope.StoreSelected;
           $scope.orderPost.order = {
             orderitem:$scope.cartItems
         };
-          $scope.orderPost.user = {
+
+          // retrive from local db
+            //query = *
+            //$cordovaSQLite.execute  ()
+          //      { window.meherUsserMobile = result.rows.item(0).mobile}
+          // if (result.rows.item(0).addLine1)
+          //      { window.meherUsseradress = result.rows.item(0).addLine1}
+          //      formData.userAddress = window.meherUsseradress
+          // if (result.rows.item(0).addLine1)
+          //      { window.meherUsseradress = result.rows.item(0).addLine2}
+
+
+          $scope.orderPost.customer = {
             id:"OrderUser",
-            Address:$scope.formData.userAddress + "," + $scope.formData.userSublocality
+            mobile:$scope.localUserMobile,
+            Address:$scope.formData.userAddress + ", " + $scope.formData.userSublocality
           };
 
+          console.log("******");
           console.log($scope.orderPost);
 
           $http({
@@ -148,6 +204,7 @@ angular.module('starter.controllers')
             data: $scope.orderPost
           }).then(function(response) {
                 // success
+                alert("orderSentToServe");
                 console.log(response);
               },
               function(response) { // optional
@@ -162,18 +219,15 @@ angular.module('starter.controllers')
             $cordovaSms
                 .send($scope.StoreSelected.mobile, $scope.cartMsg, options)
                 .then(function () {
-                     alert('Sending Order');
+                     //alert('Sending Order');
                   // Success! SMS was sent
                   $location.url("/app/postorder");
-
                 }, function (error) {
                   alert(error);
                   // An error occurred
 
                 });
           });
-
-
         }
         else{
           console.log("got it");

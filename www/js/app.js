@@ -7,21 +7,30 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles','ion-google-place'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
+    .run(function($ionicPlatform,$state) {
+      $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins.Keyboard) {
+          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        }
+        if (window.StatusBar) {
+          // org.apache.cordova.statusbar required
+          StatusBar.styleDefault();
+        }
+        document.addEventListener("resume", function() {
+          if($state.current.name == "app.storelist")
+          {
+            $state.go($state.current, {}, {reload: true});
+          }
 
-    .config(function($stateProvider, $urlRouterProvider) {
+        }, false);
+      });
+    })
+
+
+    .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+      $ionicConfigProvider.views.forwardCache(true);
       $stateProvider
 
           .state('app', {
@@ -40,11 +49,12 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-          .state('app.browse', {
-            url: '/browse',
+          .state('app.contact', {
+            url: '/contact',
             views: {
               'menuContent': {
-                templateUrl: 'templates/browse.html'
+                templateUrl: 'templates/contact.html',
+                controller: 'contactCtrl'
               }
             }
           })
@@ -66,9 +76,17 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-
+          .state('app.about', {
+            url: '/about',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/about.html'
+              }
+            }
+          })
           .state('app.storelist', {
             url: '/categories/:storelistId',
+            cache: false,
             views: {
               'menuContent': {
                 templateUrl: 'templates/storelist.html',
@@ -85,15 +103,62 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-      .state('app.orderPage', {
-        url: '/order',
+          .state('app.orderPage', {
+            url: '/order',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/order.html',
+                controller: 'orderCtrl'
+              }
+            }
+          })
+          .state('app.activeorders', {
+            url: '/activeorders',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/active-orders.html',
+                controller: 'activeOrdersCtrl'
+              }
+            }
+          })
+          .state('app.orderDetail', {
+            url: '/orderdetail/:orderId',
+            cache: false,
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/order-detail.html',
+                controller: 'orderDetailCtrl'
+              }
+            }
+          })
+          .state('app.login', {
+            url: '/login',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/login.html',
+                controller: 'loginCtrl'
+              }
+            }
+          })
+      .state('app.otp', {
+        url: '/otp',
         views: {
           'menuContent': {
-            templateUrl: 'templates/order.html',
-            controller: 'orderCtrl'
+            templateUrl: 'templates/otp.html',
+            controller: 'otpCtrl'
+          }
+        }
+      })
+      .state('app.share', {
+        url: "/share",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/share.html",
+            controller: 'shareCtrl'
           }
         }
       });
+
       //.state('app.singleStore', {
       //  url: '/categories/:storelistId',
       //  views: {
