@@ -9,10 +9,24 @@
         </button>
       </ion-nav-buttons>
 
-      <ion-nav-buttons side="right">
-        <a class="button icon-right ion-speakerphone button-balanced" href="#/app/share">Share</a>
-      </ion-nav-buttons>
+      <!--<ion-nav-buttons side="right">-->
+        <!--<a class="button icon-right ion-speakerphone button-balanced" href="#/app/share">Share</a>-->
+      <!--</ion-nav-buttons>-->
 
+      <!--<ion-nav-buttons side="right" ng-hide="currentPage !== '/categories'">-->
+        <!--<a class="button icon-right ion-speakerphone button-balanced" href="#/app/share">{{currentPage}}</a>-->
+      <!--</ion-nav-buttons>-->
+
+      <ion-nav-buttons side="right">
+        <a ng-if="currentPage == '/categories'" class="button icon-right ion-speakerphone button-balanced" href="#/app/share">Share</a>
+
+        <!--<button ng-if="currentPage !== '/order'" class="button button-icon icon button-assertive ion-minus-circled" ng-click="takeTODelete();" style="color: #e42012;" ></button>-->
+
+        <button ng-if="currentPage == '/order'" class="button button-icon icon button-assertive ion-minus-circled" ng-click="takeTODelete();" style="color: #e42012;" ></button>
+        <i ng-if="currentPage == '/order'" class="button button-icon icon ion-ios-minus-empty" ng-click="takeTODelete();" style="position: absolute;
+    left: 20%;"></i>
+
+      </ion-nav-buttons>
 
     </ion-nav-bar>
 
@@ -26,7 +40,7 @@
     <ion-content>
       <ion-list>
         <ion-item menu-close ng-click="login()">
-          Register
+          Register Store
         </ion-item>
         <ion-item menu-close href="#/app/about">
           About

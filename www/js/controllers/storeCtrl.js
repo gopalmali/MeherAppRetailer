@@ -116,6 +116,8 @@ angular.module('starter.controllers')
         if(checkStatus){
           console.log("adding");
           $scope.cartItems.push(productItem);
+          console.log($scope.cartItems);
+          CartData.setCart($scope.cartItems);
           console.log(CartData.getCart());
         }
         else{
@@ -124,9 +126,13 @@ angular.module('starter.controllers')
             productItem.price = productItem.price / productItem.quantity;
             productItem.quantity =1;
           }
-          $scope.cartItems = $scope.cartItems.filter(function( obj ) {
-            return obj.$$hashKey !== productItem.$$hashKey;
-          });
+
+          for (var i in $scope.cartItems) {
+            if ($scope.cartItems [i] === productItem) {
+              $scope.cartItems.splice(i, 1);
+            }
+          }
+          CartData.setCart($scope.cartItems);
           //CartData.copyCart($scope.cartItems);
           console.log(CartData.getCart());
         }

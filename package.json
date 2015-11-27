@@ -25,7 +25,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-whitelist@1.0.0",
     "cordova.plugins.diagnostic",
-    "org.apache.cordova.device"
+    "org.apache.cordova.device",
+    "org.apache.cordova.splashscreen"
   ],
   "cordovaPlatforms": [
     "android"

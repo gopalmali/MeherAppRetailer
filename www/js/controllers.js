@@ -1,9 +1,21 @@
 angular.module('starter.controllers', [])
 
-    .controller('LoadCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, $http,CartData,$location,$cordovaDevice) {
+    .controller('LoadCtrl', function($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, ionPlatform, $http,CartData,$location,$cordovaDevice,$state,$rootScope) {
       $scope.notifications = [];
       $scope.cartList=CartData.getCart();
       $scope.grandTotal;
+
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        console.log("******************")
+        console.log(toState)
+        $scope.currentPage = toState.url;
+        console.log($scope.currentPage);
+
+      });
+
+      $scope.takeTODelete = function() {
+        $rootScope.$emit("CallDelete", {});
+      }
 
       $scope.$on('$locationChangeSuccess', function(event) {
         console.log($location.path())
@@ -34,7 +46,6 @@ angular.module('starter.controllers', [])
         //alert(device);
         $scope.devideID  = $cordovaDevice.getUUID();
         window.localStorage['deviceID'] = $scope.devideID;
-
         $scope.register();
       });
 

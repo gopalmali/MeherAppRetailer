@@ -3,7 +3,7 @@
  */
 angular.module('starter.controllers')
 
-    .controller('orderCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicPopup,$timeout,$cordovaSms,$location,$window,$cordovaSQLite) {
+    .controller('orderCtrl', function($scope, $http, $stateParams,CartData,StoreData,$ionicPopup,$timeout,$cordovaSms,$location,$window,$cordovaSQLite,$rootScope) {
       //$scope.cartList=CartData.getCart();
       $scope.cartMsg="";
       $scope.cartItems = CartData.getCart();
@@ -15,7 +15,7 @@ angular.module('starter.controllers')
       $scope.showDelete=false;
       $scope.addnotAvailble=false;
 
-      var db = $cordovaSQLite.openDB("my1.db");
+      var db = $cordovaSQLite.openDB("my.db");
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_user (deviceID text, mobile integer,type text,addLine1 text,addLine2 text)");
 
 
@@ -49,9 +49,13 @@ angular.module('starter.controllers')
         //CartData.setCart($scope.cartItems);
       }
 
+      $rootScope.$on("CallDelete", function(){
+        $scope.toggleShowDelete();
+      });
+
       $scope.toggleShowDelete = function() {
         $scope.showDelete= !$scope.showDelete;
-      }
+      };
 
         $scope.updateCart = function(productItem) {
         $scope.cartItems = $scope.cartItems.filter(function( obj ) {
@@ -132,11 +136,21 @@ angular.module('starter.controllers')
         $cordovaSQLite.execute(db,query,[window.localStorage['deviceID']]).then(function(result) {
           if(result.rows.length > 0) {
             $scope.localUserMobile=JSON.stringify(result.rows.item(0).mobile);
-            $scope.localUserMobile=JSON.stringify(result.rows.item(0).mobile);
             window.meherLoggedin= true;
-            $scope.sendSMS();
+            $scope.makeOrder();
           } else {
-            window.meherLoggedin = false;
+            $scope.makeOrder();
+
+            window.localStorage['orderPost'] = $scope.orderPost;
+            window.localStorage['currentOrder'] = $scope.cartMsg;
+            alert(window.localStorage['currentOrder']);
+            alert(window.localStorage['orderPost']);
+
+            console.log(window.localStorage['currentOrder']);
+            console.log(window.localStorage['orderPost']);
+            console.log(window.localStorage['meherUserMobile']);
+
+            //window.meherLoggedin = false;
             alert("new user");
             $location.url("/app/login");
             //alert("NO ROWS EXIST");
@@ -149,13 +163,51 @@ angular.module('starter.controllers')
 
       $scope.saveLocally = function() {
         //alert("saving");
-      }
+      };
+
+      $scope.makeUser = function() {
+        //alert("saving");
+        //retrive local data
+
+        $scope.orderPost.customer.mobile = $scope.localUserMobile;
+        console.log("******");
+        console.log($scope.orderPost);
+
+        $http({
+          url: 'http://getmeher.com:3000/orders',
+          method: "POST",
+          data: $scope.orderPost
+        }).then(function(response) {
+              // success
+              alert("orderSentToServe");
+              console.log(response);
+            },
+            function(response) { // optional
+              // failed
+              console.log(response);
+            });
+
+        $scope.cartMsg = $scope.cartMsg +'\n'+"Ordered Using Meher App - https://goo.gl/cxqKEc";
+        console.log($scope.cartMsg);
+
+        document.addEventListener("deviceready", function () {
+          $cordovaSms
+              .send($scope.StoreSelected.mobile, $scope.cartMsg, options)
+              .then(function () {
+                //alert('Sending Order');
+                // Success! SMS was sent
+                $location.url("/app/postorder");
+              }, function (error) {
+                alert(error);
+                // An error occurred
+
+              });
+        });
+      };
 
 
 
-      $scope.sendSMS = function() {
-
-
+      $scope.makeOrder = function() {
         console.log($scope.formData.userAddress);
         $scope.cartMsg ="";
         if ($scope.formData.userAddress) {
@@ -164,19 +216,25 @@ angular.module('starter.controllers')
             if(value.quantity){
               $scope.cartMsg = $scope.cartMsg + value.quantity;
               if (value.unit)
-                $scope.cartMsg = $scope.cartMsg + value.unit + " " + value.name + "-" + "\n";
+                $scope.cartMsg = $scope.cartMsg + value.unit + " " + value.name  + "\n";
               else
-                $scope.cartMsg = $scope.cartMsg  + " " + value.name + "-" + "\n";
+                $scope.cartMsg = $scope.cartMsg  + " " + value.name  + "\n";
             }
             else
-              $scope.cartMsg = $scope.cartMsg + '-'+value.name + "-" + "\n";
+              $scope.cartMsg = $scope.cartMsg + '-'+value.name  + "\n";
           });
           $scope.cartMsg = $scope.cartMsg + "Address:" + "\n";
           $scope.cartMsg = $scope.cartMsg + $scope.formData.userAddress + "\n" + $scope.formData.userSublocality;
           $scope.orderPost.store = $scope.StoreSelected;
+          $scope.orderPost.orderStatus = "sent";
           $scope.orderPost.order = {
             orderitem:$scope.cartItems
         };
+
+          $scope.orderPost.customer = {
+            devceId:window.localStorage['deviceID'],
+            address:$scope.formData.userAddress + ", " + $scope.formData.userSublocality
+          };
 
           // retrive from local db
             //query = *
@@ -188,51 +246,52 @@ angular.module('starter.controllers')
           // if (result.rows.item(0).addLine1)
           //      { window.meherUsseradress = result.rows.item(0).addLine2}
 
-
-          $scope.orderPost.customer = {
-            id:"OrderUser",
-            mobile:$scope.localUserMobile,
-            Address:$scope.formData.userAddress + ", " + $scope.formData.userSublocality
-          };
-
-          console.log("******");
-          console.log($scope.orderPost);
-
-          $http({
-            url: 'http://getmeher.com:3000/orders',
-            method: "POST",
-            data: $scope.orderPost
-          }).then(function(response) {
-                // success
-                alert("orderSentToServe");
-                console.log(response);
-              },
-              function(response) { // optional
-                // failed
-                console.log(response);
-              });
-
-          $scope.cartMsg = $scope.cartMsg +'\n'+"Ordered Using Meher App - https://goo.gl/cxqKEc";
-          console.log($scope.cartMsg);
-
-          document.addEventListener("deviceready", function () {
-            $cordovaSms
-                .send($scope.StoreSelected.mobile, $scope.cartMsg, options)
-                .then(function () {
-                     //alert('Sending Order');
-                  // Success! SMS was sent
-                  $location.url("/app/postorder");
-                }, function (error) {
-                  alert(error);
-                  // An error occurred
-
-                });
-          });
+          //
+          //$scope.orderPost.customer = {
+          //  id:"OrderUser",
+          //  mobile:$scope.localUserMobile,
+          //  Address:$scope.formData.userAddress + ", " + $scope.formData.userSublocality
+          //};
+          //
+          //console.log("******");
+          //console.log($scope.orderPost);
+          //
+          //$http({
+          //  url: 'http://getmeher.com:3000/orders',
+          //  method: "POST",
+          //  data: $scope.orderPost
+          //}).then(function(response) {
+          //      // success
+          //      alert("orderSentToServe");
+          //      console.log(response);
+          //    },
+          //    function(response) { // optional
+          //      // failed
+          //      console.log(response);
+          //    });
+          //
+          //$scope.cartMsg = $scope.cartMsg +'\n'+"Ordered Using Meher App - https://goo.gl/cxqKEc";
+          //console.log($scope.cartMsg);
+          //
+          //document.addEventListener("deviceready", function () {
+          //  $cordovaSms
+          //      .send($scope.StoreSelected.mobile, $scope.cartMsg, options)
+          //      .then(function () {
+          //           //alert('Sending Order');
+          //        // Success! SMS was sent
+          //        $location.url("/app/postorder");
+          //      }, function (error) {
+          //        alert(error);
+          //        // An error occurred
+          //
+          //      });
+          //});
         }
         else{
           console.log("got it");
           $scope.showAlert();
 
         }
-      }
+      };
+
     });

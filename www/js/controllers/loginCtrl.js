@@ -6,30 +6,33 @@ angular.module('starter.controllers')
     .controller('loginCtrl', function($scope, $ionicModal, $timeout, $window, $location, $http, $cordovaDevice,$ionicPlatform,$cordovaSQLite) {
       $scope.loginData={};
       window.db;
+      $scope.storeAccount = true;
       $scope.loginData.deviceId = window.localStorage['deviceID'];
-      //$ionicPlatform.ready(function () {
-      //  $scope.loginData.deviceId = $cordovaDevice.getUUID();
-      //  window.db = $cordovaSQLite.openDB("my.db");
-      //  $cordovaSQLite.execute(window.db, "CREATE TABLE IF NOT EXISTS Meher_user (deviceID text, mobile integer,type text)");
-      //  $scope.select($scope.loginData.deviceId);
-      //});
+      $scope.otpRequested = false;
 
-      $scope.select = function(deviceId) {
-        var query = "SELECT * FROM Meher_user WHERE deviceId = ?";
-        $cordovaSQLite.execute(window.db,query,[deviceId]).then(function(result) {
-          if(result.rows.length > 0) {
-            window.meherUser=JSON.stringify(result.rows.item(0));
-            alert(window.meherUser);
-            window.mobile=JSON.stringify(result.rows.item(0).mobile);
-            window.meherLoggedin= true;
-          } else {
-            window.meherLoggedin = false;
-            //alert("NO ROWS EXIST");
-          }
-        }, function(error) {
-          console.error(error);
-        });
-      };
+      $ionicPlatform.ready(function () {
+        $scope.loginData.deviceId = $cordovaDevice.getUUID();
+        window.db = $cordovaSQLite.openDB("my.db");
+        $cordovaSQLite.execute(window.db, "CREATE TABLE IF NOT EXISTS Meher_user (deviceID text, mobile integer,type text)");
+        $scope.select($scope.loginData.deviceId);
+      });
+
+      //$scope.select = function(deviceId) {
+      //  var query = "SELECT * FROM Meher_user WHERE deviceId = ?";
+      //  $cordovaSQLite.execute(window.db,query,[deviceId]).then(function(result) {
+      //    if(result.rows.length > 0) {
+      //      window.meherUser=JSON.stringify(result.rows.item(0));
+      //      window.mobile=JSON.stringify(result.rows.item(0).mobile);
+      //      window.meherLoggedin= true;
+      //      $location.url("/app/activeorders");
+      //    } else {
+      //      window.meherLoggedin = false;
+      //      //alert("NO ROWS EXIST");
+      //    }
+      //  }, function(error) {
+      //    console.error(error);
+      //  });
+      //};
 
       $scope.storeShop = function(_id,name,created,mobile,city,category,address,loc) {
         //{"_id":"56117cb75d95fd956471cce3","created":"2015-11-01T05:58:31.854Z","mobile":"9833617976","city":"Mumbai","category":"Grocery","loc":{"coordinates":[72.8490295277,19.2300433888],"type":"Point"},"address":"Shop No. 03, Om Sagar Apartment, Chandavarkar Road, Borivali West, Mumbai - 400092, Opposite Apex Hospital","phone":"+(91)-22-28902471, +(91)-9833617976","name":"Deepak General Stores"}
@@ -43,7 +46,28 @@ angular.module('starter.controllers')
         });
       };
 
+
       $scope.sendOPT = function() {
+        window.localStorage['userMobile'] = $scope.loginData.mobile;
+        console.log($scope.storeAccount);
+        if ($scope.storeAccount){
+          $scope.sendStoreOPT();
+        }
+        else{
+          $scope.sendUserOPT();
+        }
+      }
+
+      $scope.sendUserOPT = function() {
+        if(!$scope.loginData.mobile || $scope.loginData.mobile.length !== 10)
+          alert("plese enter 10 DIGIT mobile number");
+        else{
+          window.localStorage['meherUserMobile'] = $scope.loginData.mobile;
+          $location.url("/app/otp");
+        }
+      }
+
+      $scope.sendStoreOPT = function() {
         if(!$scope.loginData.mobile || !$scope.loginData.categoty)
         alert("please enter category & mobile number");
         else

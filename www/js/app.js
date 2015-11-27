@@ -112,25 +112,6 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-          .state('app.activeorders', {
-            url: '/activeorders',
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/active-orders.html',
-                controller: 'activeOrdersCtrl'
-              }
-            }
-          })
-          .state('app.orderDetail', {
-            url: '/orderdetail/:orderId',
-            cache: false,
-            views: {
-              'menuContent': {
-                templateUrl: 'templates/order-detail.html',
-                controller: 'orderDetailCtrl'
-              }
-            }
-          })
           .state('app.login', {
             url: '/login',
             views: {
@@ -172,4 +153,5 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/app/categories');
     });
+
 
