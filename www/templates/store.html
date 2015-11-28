@@ -18,7 +18,7 @@
               <i class="ion-ios-home" style="font-size: 22px;color: #C6C6C6;"></i>
             {{StoreSelected.address}}
             </span>
-          </p>
+        </p>
         <div style="color: #979797;">
             <span>
               <i class="ion-android-bicycle" style="font-size: 22px;"></i>
@@ -35,7 +35,7 @@
 
     <!--</br></br>-->
     <!--<div class="text-center">-->
-      <!--<h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>-->
+    <!--<h5><span>Type products Below </span><span ng-if="storeCategory.type=='general'">or Select From Menu</span></h5>-->
     <!--</div>-->
     <div id="customize-order">
       <div class="text-center" style="margin-bottom:0px;margin-top: 2px;font-weight: bold;">
@@ -144,7 +144,7 @@
           </div>
           <ion-scroll style="height: 280px;">
             <ion-list>
-                <ion-item class="row" ng-repeat="product in menuCategories.products" style="margin-bottom: -12px;" ng-click="showProduct(storelistId,storeId,menuCategories.deeplink,product.link)">
+              <ion-item class="row" ng-repeat="product in menuCategories.products" style="margin-bottom: -12px;" ng-click="showProduct(storelistId,storeId,menuCategories.deeplink,product.link)">
                 <div class="col col-20">
                   <img ng-src='http://images.getmeher.com/{{menuCategories.imagefolder}}/{{product.image}}' width="64px" height="64px">
                 </div>
@@ -157,9 +157,9 @@
                 </div>
 
                 <!--<div class="col col-10 text-center" style="margin-top: 10px;">-->
-                  <!--{{product.price}}-->
-                  <!--<br/>-->
-                  <!--<span style="display: block;color: #aaa;font-size: 14px;">Rs</span>-->
+                <!--{{product.price}}-->
+                <!--<br/>-->
+                <!--<span style="display: block;color: #aaa;font-size: 14px;">Rs</span>-->
                 <!--</div>-->
 
 
