@@ -152,6 +152,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
 
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/app/categories');
+      //$urlRouterProvider.otherwise('/app/login');
     });
 
 

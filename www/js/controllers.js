@@ -4,16 +4,16 @@ angular.module('starter.controllers', [])
       $scope.notifications = [];
       $scope.cartList=CartData.getCart();
       $scope.grandTotal;
-
+        $scope.requestDelete = false;
+        window.localStorage['MeherDeviceId'];
+        
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        console.log("******************")
-        console.log(toState)
+          //used for menu buttons based on current page logics
         $scope.currentPage = toState.url;
-        console.log($scope.currentPage);
-
       });
 
       $scope.takeTODelete = function() {
+          $scope.requestDelete = !$scope.requestDelete;
         $rootScope.$emit("CallDelete", {});
       }
 
@@ -44,8 +44,7 @@ angular.module('starter.controllers', [])
       // call to register automatically upon device ready
       ionPlatform.ready.then(function (device) {
         //alert(device);
-        $scope.devideID  = $cordovaDevice.getUUID();
-        window.localStorage['deviceID'] = $scope.devideID;
+        window.localStorage['MeherDeviceId']  = $cordovaDevice.getUUID();
         $scope.register();
       });
 
@@ -159,14 +158,13 @@ angular.module('starter.controllers', [])
         // Create a random userid to store with it
         var onSuccess = function(position) {
           window.currentLoc = position;
-          //var user = {deviceID: $scope.devideID, user: 'Auser ' + position.coords.latitude +'-'+position.coords.longitude , type: type, token: $scope.regId };
-          var user = {deviceID: $scope.devideID, user: $scope.devideID , type: type, token: $scope.regId };
+          var user = {deviceID: window.localStorage['MeherDeviceId'], user: window.localStorage['MeherDeviceId'] , type: type, token: $scope.regId };
           //alert("Post token for registered device with data " + JSON.stringify(user));
           //Log.d("meher" , "Post token for registered device with data")
 
           $http.post('http://getmeher.com:8000/subscribe', JSON.stringify(user))
               .success(function (data, status) {
-                //alert("yes done")
+                //alert("yes done" + data)
                 console.log("Token stored, device is successfully subscribed to receive push notifications.");
                 //alert("Token stored, device is successfully subscribed to receive push notifications.");
               })
@@ -193,11 +191,11 @@ angular.module('starter.controllers', [])
         $http.post('http://getmeher.com:8000/unsubscribe', JSON.stringify(tkn))
             .success(function (data, status) {
               console.log("Token removed, device is successfully unsubscribed and will not receive push notifications.");
-              alert("Token removed, device is successfully unsubscribed and will not receive push notifications.");
+              //alert("Token removed, device is successfully unsubscribed and will not receive push notifications.");
             })
             .error(function (data, status) {
               console.log("Error removing device token." + data + " " + status)
-              alert("Error removing device token." + data + " " + status)
+              //alert("Error removing device token." + data + " " + status)
             }
         );
       }
@@ -211,7 +209,7 @@ angular.module('starter.controllers', [])
         console.log("Unregister called");
         Log.d("meher" , "Unregister called")
 
-        alert("Unregister called");
+        //alert("Unregister called");
         removeDeviceToken();
         $scope.registerDisabled=false;
         //need to define options here, not sure what that needs to be but this is not recommended anyway

@@ -44,7 +44,8 @@
       "locator": "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
       "id": "cordova-plugin-x-socialsharing"
     },
-    "org.apache.cordova.splashscreen"
+    "org.apache.cordova.splashscreen",
+    "cordova-plugin-whitelist@~1.1.0"
   ],
   "cordovaPlatforms": [
     "android",

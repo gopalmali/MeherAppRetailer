@@ -1,83 +1,77 @@
 <ion-view view-title="Login">
 
-<!--<ion-header-bar>-->
-    <!--<h1 class="title">Login</h1>-->
-    <!--<div class="buttons">-->
-      <!--<button class="button button-clear" ng-click="closeContact()">Close</button>-->
-    <!--</div>-->
-  <!--</ion-header-bar>-->
-  <ion-content>
-    <div>
-
-    <div class="row">
-      <div class="col text-center">
-        <h3>Login</h3>
-      </div>
-    </div>
-      <!--<div class="row" ng-if="otpRequested">-->
-        <!--<div class="col text-center">-->
-          <!--<h3>Verify Code</h3>-->
-          <!--<p>Enter 4 digit code SMS sent on {{currentMobile}}</p>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<form ng-submit="sendOPT()" ng-if="!otpRequested">-->
-      <form ng-submit="sendOPT()">
-      <div class="list">
-
-        <label class="item item-input">
-          <span class="input-label">Mobile Number +91</span>
-          <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="loginData.mobile">
-        </label>
-
-        <li class="item item-toggle">
-          Store Login
-          <label class="toggle toggle-assertive">
-            <input type="checkbox" ng-model="storeAccount">
-            <div class="track">
-              <div class="handle"></div>
+    <ion-content>
+        <div>
+            <div class="row" ng-if="!otpRequested">
+                <div class="col text-center">
+                    <h3>Login</h3>
+                </div>
             </div>
-          </label>
-        </li>
+            <div class="row" ng-if="otpRequested">
+                <div class="col text-center">
+                    <h3>Verify Code</h3>
+                    <p>Enter 4 digit code SMS sent on {{loginData.mobile}}</p>
+                </div>
+            </div>
 
-        <label class="item item-input" ng-show="storeAccount">
-          <span class="input-label">Select Store Category</span>
-          <select ng-model="loginData.categoty">
-            <option selected>Grocery</option>
-            <option>Fruits</option>
-            <option>Electronics</option>
-            <option>Pharmacy</option>
-          </select>
-        </label>
+            <div ng-if="!otpRequested">
+                <form ng-submit="sendOPT()">
+                <div class="list">
 
-        <label class="item">
-          <button class="button button-block button-balanced" type="submit">Login</button>
-        </label>
-        <label class="item" ng-show="storeAccount">
-          <div class="text-center">Store not registered yet?</div>
-          <button class="button button-block button-positive" ng-click="login()">Register your store</button>
-        </label>
-      </div>
-    </form>
+                    <label class="item item-input">
+                        <span class="input-label">Mobile Number +91</span>
+                        <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="loginData.mobile">
+                    </label>
 
+                    <label class="item">
+                        <button class="button button-block button-balanced" ng-click="sendOPT()" type="submit">Login</button>
+                    </label>
+                </div>
+                    </form>
+            </div>
 
-      <!--<form ng-submit="verifiedLogin()" ng-if="otpRequested">-->
-        <!--<div class="list">-->
-          <!--<label class="item item-input">-->
+            <div ng-if="otpRequested">
+
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Verify OTP</span>
+                        <input type="tel" placeholder="Enter 4 digit OTP" ng-model="loginData.opt">
+                    </label>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button ng-click="backToLogin()"  class="button button-block icon-left ion-chevron-left button-assertive" >Edit Mobile</button>
+                    </div>
+                    <div class="col">
+                        <button id="verify" ng-click="verifiedOtp()" class="button button-block icon-right ion-checkmark-round button-balanced">Verify</button>
+                    </div>
+                </div>
+                </hr>
+            </div>
+
+            <!--<div ng-if="otpRequested">-->
+            <!--<div class="list">-->
+            <!--<label class="item item-input">-->
             <!--<span class="input-label">Verify OTP</span>-->
             <!--<input type="tel" placeholder="Enter 4 digit OTP" ng-model="loginData.opt">-->
-          <!--</label>-->
-          <!--<label class="item">-->
+            <!--</label>-->
+            <!--<label class="item">-->
             <!--<div class="row">-->
-              <!--<div class="col">-->
-                <!--<button class="button button-block button-balanced" type="submit">Verify</button>-->
-                <!--&lt;!&ndash;<button class="button icon-right ion-checkmark button-block button-balanced" ng-click="verifiedLogin()">Verify</button>&ndash;&gt;-->
-              <!--</div>-->
+            <!--<div class="col col-50">-->
+            <!--<button id = "back" ng-click="backToLogin($event)"  class="button button-block icon-left ion-chevron-left button-assertive" >Edit Mobile</button>-->
+            <!--&lt;!&ndash;<button class="button icon-right ion-checkmark button-block button-balanced" ng-click="verifiedLogin()">Verify</button>&ndash;&gt;-->
             <!--</div>-->
-          <!--</label>-->
-        <!--</div>-->
-      <!--</form>-->
+            <!--<div class="col col-50">-->
+            <!--<button id="verify" ng-click="verifiedOtp($event)" class="button button-block icon-right ion-checkmark-round button-balanced"> ">Verify</button>-->
+            <!--&lt;!&ndash;<button class="button icon-right ion-checkmark button-block button-balanced" ng-click="verifiedLogin()">Verify</button>&ndash;&gt;-->
+            <!--</div>-->
 
-    </div>
-  </ion-content>
-</ion-modal-view>
+            <!--</div>-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </ion-content>
+</ion-view>
