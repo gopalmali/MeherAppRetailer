@@ -16,18 +16,34 @@
 
             <div ng-if="!otpRequested">
                 <form ng-submit="sendOPT()">
-                <div class="list">
+                    <div class="list">
 
-                    <label class="item item-input">
-                        <span class="input-label">Mobile Number +91</span>
-                        <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="loginData.mobile">
-                    </label>
+                        <label class="item item-input">
+                            <span class="input-label">Mobile Number +91</span>
+                            <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="loginData.mobile">
+                        </label>
 
-                    <label class="item">
-                        <button class="button button-block button-balanced" ng-click="sendOPT()" type="submit">Login</button>
-                    </label>
-                </div>
-                    </form>
+                        <label class="item item-input item-select">
+                            <span class="input-label">Store Category</span>
+                            <select ng-model="loginData.categoty">
+                                <option value="shop-groceries" selected>Grocery</option>
+                                <option value="shop-fruits">Fruits</option>
+                                <option value="shop-electronics">Electronics</option>
+                                <option value="shop-medicals">Pharmacy</option>
+                            </select>
+                        </label>
+
+                        <label class="item">
+                            <button class="button button-block button-balanced" type="submit">Login</button>
+                        </label>
+                    </div>
+                </form>
+
+                <!--<label class="item">-->
+                    <!--<div class="text-center">Store not registered yet?</div>-->
+                    <!--<button class="button button-block button-positive" ng-click="login()">Register your store</button>-->
+                <!--</label>-->
+
             </div>
 
             <div ng-if="otpRequested">

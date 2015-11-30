@@ -5,9 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+var db = null;
+
 var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles','ion-google-place'])
 
-    .run(function($ionicPlatform,$state) {
+    .run(function($ionicPlatform,$state,$cordovaSQLite) {
       $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -23,8 +25,9 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           {
             $state.go($state.current, {}, {reload: true});
           }
-
         }, false);
+          db = $cordovaSQLite.openDB("my1.db");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text unique NOT NULL, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
       });
     })
 
@@ -121,24 +124,43 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
               }
             }
           })
-      .state('app.otp', {
-        url: '/otp',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/otp.html',
-            controller: 'otpCtrl'
-          }
-        }
-      })
-      .state('app.share', {
-        url: "/share",
-        views: {
-          'menuContent': {
-            templateUrl: "templates/share.html",
-            controller: 'shareCtrl'
-          }
-        }
-      });
+          .state('app.otp', {
+            url: '/otp',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/otp.html',
+                controller: 'otpCtrl'
+              }
+            }
+          })
+          .state('app.activeorders', {
+            url: '/activeorders',
+            cache: false,
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/active-orders.html',
+                controller: 'activeOrdersCtrl'
+              }
+            }
+          })
+          .state('app.orderDetail', {
+            url: '/orderdetail/:orderId',
+            views: {
+              'menuContent': {
+                templateUrl: 'templates/order-detail.html',
+                controller: 'orderDetailCtrl'
+              }
+            }
+          })
+          .state('app.share', {
+            url: "/share",
+            views: {
+              'menuContent': {
+                templateUrl: "templates/share.html",
+                controller: 'shareCtrl'
+              }
+            }
+          });
 
       //.state('app.singleStore', {
       //  url: '/categories/:storelistId',
@@ -151,7 +173,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       //});
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/categories');
+      $urlRouterProvider.otherwise('/app/activeorders');
       //$urlRouterProvider.otherwise('/app/login');
     });
 

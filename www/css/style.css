@@ -48,7 +48,6 @@
     height: 100%;
 }
 
-
 .hyphenate {
     /* Careful, this breaks the word wherever it is without a hyphen */
     overflow-wrap: break-word;
@@ -355,4 +354,30 @@ background-color: transparent;
 
 #status-icon {
     margin-top: 20px;
+}
+
+.blinkred {
+    animation: blink 1s steps(5, start) infinite;
+    -webkit-animation: blink 1s steps(5, start) infinite;
+}
+@keyframes blink {
+    from { background-color: white; }
+    to { background-color: red; }
+}
+@-webkit-keyframes blink {
+    from { background-color: white; }
+    to { background-color: red; }
+}
+
+.blinkblue {
+    animation: blinkbl 1s steps(5, start) infinite;
+    -webkit-animation: blinkbl 1s steps(5, start) infinite;
+}
+@keyframes blinkbl {
+    from { background-color: white; }
+    to { background-color: deepskyblue; }
+}
+@-webkit-keyframes blinkbl {
+    from { background-color: white; }
+    to { background-color: deepskyblue; }
 }
