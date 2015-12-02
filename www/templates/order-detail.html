@@ -2,13 +2,11 @@
     <ion-content>
         <div class="list" style="margin-bottom:0px">
             <div class="item item-button-right">
-                <!--<i class="icon ion-ios-cart-outline"></i>-->
                 <h3><b>{{currentOrder.customer.mobile}}</b></h3>
                 <button class="button button-balanced" ng-click="CallTel({{currentOrder.customer.mobile}})">
                     <i class="icon ion-ios-telephone"></i>
                 </button>
             </div>
-
         </div>
 
 
@@ -78,14 +76,15 @@
         <!--</div>-->
 
         <div class="row item item-divider">
-            <span class="col">Order List</span>
-            <span class="col text-right"><h4>({{currentOrder.order.orderitem.length}})</h4></span>
+            <span class="col">Item List ({{currentOrder.order.orderitem.length}})</span>
+            <span class="col text-right"><h5 class="buy-text">Tick if <br>available</h5></span>
         </div>
-        <ion-scroll style="height: 280px;">
+        <ion-scroll style="max-height: 280px;">
             <ion-list>
-                <ion-item class="row" ng-repeat="product in currentOrder.order.orderitem" style="margin-bottom: -12px;">
+                <!--<ion-item class="row" ng-repeat="product in currentOrder.order.orderitem"  style="margin-top: 0px;" ng-class="{'order-enabled':product.available, 'order-disabled':!product.available,'order-blink': $index==currentBlink && $index!==0,'order-blink-constant': $index==!bilnkFirst}">-->
+                <ion-item class="row" ng-repeat="product in currentOrder.order.orderitem"  style="margin-top: 0px;" ng-class="{'order-enabled':product.available, 'order-disabled':!product.available,'order-blink': $index==currentBlink}">
                     <div class="col col-20">
-                        <img ng-src='http://images.getmeher.com//{{product.ImgFileName}}' width="64px" height="64px">
+                        <img ng-src='http://images.getmeher.com/{{shopCategory}}/{{product.ImgFileName}}' width="64px" height="64px">
                     </div>
                     <div class="col hyphenate" style="margin-top: 12px;white-space: normal;padding-bottom: 10px;
 " ng-class="{'hide-text': product.ordernow}" >
@@ -100,33 +99,39 @@
                         <br/>
                         <span style="display: block;color: #aaa;font-size: 14px;">Rs</span>
                     </div>
-
-                    <div class="col text-center" style="margin-top: 3px">
-                        <!--<span ng-show="product.ordernow">-->
-                        <!--<a class="button button-icon icon positive ion-ios-minus-outline" ng-click="decreaseQuantity(product)" style="padding-right: 2px!important;"></a>-->
+                    <div class="col  text-center" style="margin-top: 10px;">
                         {{product.quantity}}
-                        <!--<a class="button button-icon icon positive ion-ios-plus-outline" ng-click="increaseQuantity(product)" style="padding-right: 2px!important;"></a>-->
-                <span style="display: block;color: #aaa;font-size: 14px; text-align: center; margin-top: -12px">
-                {{product.unit}}
-                </span>
-                        <!--</span>-->
+                        <br/>
+                        <span style="display: block;color: #aaa;font-size: 14px;">{{product.unit || 'QTY'}}</span>
                     </div>
+
+
                     <div class="col col-10" style="margin-right: 12px;margin-top: 3px">
                         <label class="checkbox">
-                            <!--<input type="checkbox" ng-init="cartItems.length > 0 ? checkExisting(product): false" ng-model="product.ordernow" ng-change="addToCart(product,product.ordernow,$index)">-->
-                            <input type="checkbox" ng-model="product.ordernow" ng-change="addToCart(product,product.ordernow,$index)">
+                            <input type="checkbox" ng-model="product.available" ng-change="acknowledgeOrder(product)">
+                            <!--<input type="checkbox" ng-model="product.available" ng-change="grandTotal = grandTotal + product.price;">-->
                         </label>
                     </div>
                 </ion-item>
             </ion-list>
         </ion-scroll>
+        <div class="row item item-divider">
+            <span class="col" style="color:#aaa; font-size: 12px;"><i>Click on circle above to accept the item</i></span>
+            <span class="col text-right">Total: {{grandTotal}} Rs/-</span>
+        </div>
 
-        <div class="row" ng-class="{'blinkblue': orderStatus == null}">
+        <div class="row" ng-class="{'blinkblue': orderStatus == 'sent'}" ng-hide="orderStatus !== 'sent'" style="margin-top: 1px;">
             <div class="col">
-                <button id="verify" ng-click="acceptOrder()" class="button button-block icon-right ion-checkmark-round button-balanced">Accept</button>
+                <button id="verify" ng-click="showAcceptAlert()" class="button button-block icon-right ion-checkmark-round button-balanced">Accept</button>
             </div>
             <div class="col">
-                <button ng-click="rejectOrder()"  class="button button-block icon-right ion-chevron-left button-assertive" >Edit Mobile</button>
+                <button ng-click="showAcceptConfirm()"  class="button button-block icon-right ion-close button-assertive">Reject</button>
+            </div>
+        </div>
+
+        <div class="row" ng-show="orderStatus == 'accepted'" >
+            <div class="col text-center">
+                <button ng-click="acceptOrder()" class="button button-block icon-right ion-checkmark-round button-balanced">Delivery Sent</button>
             </div>
         </div>
 

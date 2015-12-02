@@ -52,9 +52,7 @@ angular.module('starter.controllers', [])
       // Register
       $scope.register = function () {
         var config = null;
-
         if (ionic.Platform.isAndroid()) {
-
           config = {
             "senderID": "181306712234" // REPLACE THIS WITH YOURS FROM GCM CONSOLE - also in the project URL like: https://console.developers.google.com/project/434205989073
           };
@@ -79,7 +77,7 @@ angular.module('starter.controllers', [])
         }, function (err) {
           console.log("Register error " + err)
         });
-      }
+      };
 
       // Notification Received
       $scope.$on('$cordovaPush:notificationReceived', function (event, notification) {

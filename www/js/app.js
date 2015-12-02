@@ -26,8 +26,8 @@ app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.servic
             $state.go($state.current, {}, {reload: true});
           }
         }, false);
-        db = $cordovaSQLite.openDB("my1.db");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text unique NOT NULL, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
+          db = $cordovaSQLite.openDB("my4.db");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text NOT NULL UNIQUE, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
       });
     })
 
@@ -182,8 +182,10 @@ app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.servic
       //});
 
       // if none of the above states are matched, use this as the fallback
-     // $urlRouterProvider.otherwise('/app/activeorders');
-      $urlRouterProvider.otherwise('/app/profile');
+
+      //$urlRouterProvider.otherwise('/app/activeorders');
+      $urlRouterProvider.otherwise('/app/orderdetail/wds');
+      //$urlRouterProvider.otherwise('/app/login');
     });
 
 

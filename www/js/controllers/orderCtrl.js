@@ -119,7 +119,7 @@ angular.module('starter.controllers')
                     total = total + (item.price);
                 else
                     total = 0
-            })
+            });
             return total;
         };
 
