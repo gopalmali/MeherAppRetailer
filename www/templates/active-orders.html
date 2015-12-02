@@ -1,7 +1,7 @@
-<ion-view view-title="Active Orders">
+<ion-view view-title="Order List">
   <ion-content>
-    <ion-list>
-      <ion-item  class="item item-thumbnail-left" ng-repeat="order in activeOrderLists" ng-click="goToorder(order)" ng-class="{'blinkred': order.orderStatus == 'sent'}">
+      <ion-list>
+      <ion-item  class="item item-thumbnail-left" ng-repeat="order in activeOrderLists" ng-click="goToorder(order)" ng-class="{'blink':order.orderStatus=='sent','strike-order':order.orderStatus=='rejected','strike-order':order.orderStatus=='canceled'}">
         <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-4/128/Shopping-cart-full-icon.png">
         <h2>{{order.customer.mobile}}</h2>
           <p>{{order.customer.addLine1}}</p>

@@ -356,17 +356,17 @@ background-color: transparent;
     margin-top: 20px;
 }
 
-.blinkred {
+.blink {
     animation: blink 1s steps(5, start) infinite;
     -webkit-animation: blink 1s steps(5, start) infinite;
 }
 @keyframes blink {
     from { background-color: white; }
-    to { background-color: red; }
+    to { background-color: #ff6668; }
 }
 @-webkit-keyframes blink {
     from { background-color: white; }
-    to { background-color: red; }
+    to { background-color: #ff6668; }
 }
 
 .blinkblue {
@@ -375,9 +375,47 @@ background-color: transparent;
 }
 @keyframes blinkbl {
     from { background-color: white; }
-    to { background-color: deepskyblue; }
+    to { background-color: #028cff; }
 }
 @-webkit-keyframes blinkbl {
     from { background-color: white; }
-    to { background-color: deepskyblue; }
+    to { background-color: #028cff; }
+}
+
+.strike-order{
+    text-decoration: line-through;
+}
+
+.order-disabled{
+    opacity: 0.3;
+}
+.order-enabled{
+    opacity: 1 !important;
+}
+
+.order-blink {
+    animation: order-blink 1s steps(5, start) 5;
+    -webkit-animation: order-blink 1s steps(5, start) 5;
+}
+@keyframes order-blink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+@-webkit-keyframes order-blink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+
+.order-blink-constant {
+    animation: order-blink-constant 1s steps(5, start) infinite;
+    -webkit-animation: order-blink-constant 1s steps(5, start) infinite;
+}
+@keyframes order-blink-constant {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+@-webkit-keyframes order-blink-constant {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
 }
