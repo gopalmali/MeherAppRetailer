@@ -1,10 +1,13 @@
-<ion-view view-title="Delivery">
+<ion-view view-title="Order Status">
   <ion-content>
-    <div class="row" id="order-header">
-      <div class="col text-center">
-        <b>Order Status</b>
-      </div>
+    <div class="row item item-divider">
+      <span class="col text-center">Order Status  </span>
     </div>
+    <!-- <div class="row" id="order-header">
+       <div class="col text-center">
+         <b>Order Status</b>
+       </div>
+     </div> -->
 
     <div id="status-icon" class="row">
       <div class="col">
@@ -46,6 +49,72 @@
         <div class="col">
           <button class="button icon-right button-block ion-arrow-swap ion-ios-cart button-assertive">Shift Cart/ Change Store</button>
         </div>
+      </div>
+
+      <div class="row item item-divider">
+        <span class="col text-center">Store Feedback</span>
+        <form>
+          <div class="list">
+          <!--  <label class="item item-toggle">
+              <span class="input-label">Order Delivered in Time??</span>
+              <label class="toggle toggle-assertive">
+                <input type="checkbox">
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+              </input>
+            </label> -->
+
+            <label class="item-input item-select">
+            <span class="input-label">Order Delivered in Time??</span>
+            <select>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          <!--    <button class="button button-balanced">
+                Yes
+              </button>
+              <button class="button button-assertive">
+                NO
+              </button> -->
+            </label>
+
+            <label class="item-input item-select">
+              <span class="input-label">Quality of product delivered</span>
+              <select>
+                <option>Average</option>
+                <option>Good</option>
+              </select>
+            </label>
+
+            <label class="item-input item-select">
+              <span class="input-label">Rate Store</span>
+              <select>
+                <option>Average</option>
+                <option>Good</option>
+                <option>Good</option>
+              </select>
+            </label>
+
+            <button class="button button-balanced" >
+              button-balanced
+            </button>
+
+            <div class="row item">
+              <div class="col text-left">
+                <button class="button button-small button-balanced">Call Store</button>
+              </div>
+
+              <div class="col text-right">
+                <button class="button button-small button-balanced">Shift Cart/ Change Store</button>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+
       </div>
 
     </div>

@@ -1,0 +1,206 @@
+<ion-view view-title="Profile">
+    <ion-content>
+        <div>
+          <!--  <div class="row" >
+                <div class="col text-center">
+                    <h3></h3>
+                </div>
+            </div> -->
+            <div class="row item item-divider">
+                <span class="col text-center">Store Profile  </span>
+            </div>
+            <form>
+                <div class="list">
+
+                    <label class="item item-input">
+                        <span class="input-label">StoreName:</span>
+                        <input type="tel"  placeholder="Enter store name"  ng-model="profileData.name">
+                    </label>
+
+                    <label class="item item-input">
+                        <span class="input-label">Mobile Number +91</span>
+                        <input type="tel"  placeholder="Enter 10 digit mobile number" ng-model="profileData.mobile">
+                    </label>
+                    <label class="item item-input">
+                    <span class="input-label">Delivery Area <b>{{valueTempDeliveryDistance}}</b></span>
+                    <div class=" range range-positive" >
+                    <i class="icon ion-android-bicycle " style="color: #AAAAAA"></i>
+                    <input type="range" min="0" max="2" step="1" ng-model="tempDeliveryDistance" ng-change="processDistance(tempDeliveryDistance)">
+                    <i class="icon ion-android-bicycle"  style="color: #387ef5"></i>
+                    </div>
+                    </label>
+
+                    <!--    <label class="item item-input item-select">
+                            <span class="input-label">Delivery Area</span>
+                            <select ng-model="loginData.categoty">
+                                <option value="shop-groceries" selected>0.5 km</option>
+                                <option value="shop-fruits">1 km</option>
+                                <option value="shop-electronics">2 km</option>
+                                <option value="shop-medicals">More than 2 km</option>
+                            </select>
+                          </label>  -->
+
+
+                    <label class="item item-input item-select">
+                        <span class="input-label">Delivery Time</span>
+                        <select ng-model="profileData.deliveryTime">
+                            <option value="30" >30 mins</option>
+                            <option value="45">45 mins</option>
+                            <option value="60">60 mins</option>
+                        </select>
+                    </label>
+
+
+                <!--   <div class="row">
+                       <div class="col col-50">
+                           <label class="item-input item-select">
+                               <span class="input-label">Open</span>
+                               <select ng-model="loginData.categoty">
+                                   <option value="shop-groceries" >7 AM</option>
+                                   <option value="shop-groceries" selected>8 AM</option>
+                                   <option value="shop-fruits">9 AM</option>
+                                   <option value="shop-electronics">10 AM</option>
+                                   <option value="shop-medicals">11 AM</option>
+                                   <option value="shop-medicals">12 AM</option>
+                               </select>
+                           </label>
+
+                       </div>
+                       <div class="col col-50">
+                           <label class="item-input item-select">
+                               <span class="input-label">Close</span>
+                               <select ng-model="loginData.categoty">
+                                   <option value="shop-groceries">8 PM</option>
+                                   <option value="shop-fruits">9 PM</option>
+                                   <option value="shop-electronics" selected>10 PM</option>
+                                   <option value="shop-medicals">11 PM</option>
+                                   <option value="shop-medicals">12 PM</option>
+                               </select>
+                           </label>
+
+                       </div>
+                   </div> -->
+                    <label class="item item-input item-select">
+                        <span class="input-label">Open Time</span>
+                        <select ng-model="profileData.startTime">
+                            <option value="7" >7 AM</option>
+                            <option value="8">8 AM</option>
+                            <option value="9">9 AM</option>
+                            <option value="10">10 AM</option>
+                            <option value="11">11 AM</option>
+                            <option value="12">12 AM</option>
+                        </select>
+                    </label>
+
+                    <label class="item-input item-select">
+                        <span class="input-label">Close Time</span>
+                        <select ng-model="profileData.closeTime">
+                            <option value="8">8 PM</option>
+                            <option value="9">9 PM</option>
+                            <option value="10">10 PM</option>
+                            <option value="11">11 PM</option>
+                            <option value="12">12 PM</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-toggle">
+                        <span class="input-label">Open All Days??</span>
+                            <label class="toggle toggle-assertive">
+                                <input type="checkbox" checked ng-model="gogo">
+                                <div class="track">
+                                    <div class="handle"></div>
+                                </div>
+                            </label>
+                        </input>
+                    </label>
+
+                    <label class="item item-input item-select " ng-show="gogo">
+                        <span class="input-label" ng-show="gogo">Closed on</span>
+                        <select ng-show="gogo" ng-model="loginData.categoty">
+                            <option value="Sunday" selected>Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-toggle">
+                        <span class="input-label">Set mimimum price</span>
+                        <label class="toggle toggle-balanced">
+                            <input type="checkbox" ng-model="are">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                        </input>
+                    </label>
+
+                    <label ng-show="are" class="item item-input">
+                        <span class="input-label" ng-show="are">Minimum price</span>
+                        <input type="text"  ng-show="are"placeholder="Minimum order price rate" ng-model="profileData.minimumOrderPrice" >
+                    </label>
+
+                    <button class="button button-block button-balanced" ng-click="showConfirm()">
+                        Update
+                    </button>
+
+
+
+             <!--       <label class="item item-checkbox-right">
+                        <input type="checkbox" name="group">
+                        <span class="input-label">Yes</span>
+                    </label>
+                    <label class="item item-checkbox-right">
+                        <input type="checkbox" name="group" >
+                        <span class="input-label" ng-hide="!isHidden">No</span>
+                    </label>
+
+                    <label class="item item-input item-select " >
+                        <span class="input-label" ng-hide="true">Closed on</span>
+                        <select ng-model="loginData.categoty">
+                            <option value="shop-groceries" selected>Sunday</option>
+                            <option value="shop-fruits">Monday</option>
+                            <option value="shop-electronics">Tuesday</option>
+                            <option value="shop-medicals">Wednesday</option>
+                            <option value="shop-medicals">Thursday</option>
+                            <option value="shop-medicals">Friday</option>
+                            <option value="shop-medicals">Saturday</option>
+                        </select>
+                    </label>
+
+                    <label class="item item-input">
+                        <span class="input-label">Minimum price</span>
+                        <input type="text" placeholder="Minimum order price rate">
+                    </label>  -->
+
+
+
+
+
+             <!--   <div class="item range range-calm">
+                    <i class="icon ion-ios-lightbulb-outline">
+                        0.5km
+                    </i>
+                    <input type="range" name="volume" min="0.5km" max="2" value="1">
+                        <i class="icon ion-ios-lightbulb-">
+                            2km
+
+                        </i>
+
+                </div> -->
+
+
+
+
+
+        </div>
+
+            </form>
+
+        </div>
+
+    </ion-content>
+</ion-view>                 

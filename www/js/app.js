@@ -7,10 +7,11 @@
 // 'starter.controllers' is found in controllers.js
 var db = null;
 
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova','greatCircles','ion-google-place'])
+var app;
+app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'greatCircles', 'ion-google-place'])
 
-    .run(function($ionicPlatform,$state,$cordovaSQLite) {
-      $ionicPlatform.ready(function() {
+    .run(function ($ionicPlatform, $state, $cordovaSQLite) {
+      $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -20,19 +21,18 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           // org.apache.cordova.statusbar required
           StatusBar.styleDefault();
         }
-        document.addEventListener("resume", function() {
-          if($state.current.name == "app.storelist")
-          {
+        document.addEventListener("resume", function () {
+          if ($state.current.name == "app.storelist") {
             $state.go($state.current, {}, {reload: true});
           }
         }, false);
-          db = $cordovaSQLite.openDB("my1.db");
+        db = $cordovaSQLite.openDB("my1.db");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS Meher_store (_id text unique NOT NULL, deviceId text, name text,created text,closeTime text, startTime text,deliveryTime text,deliveryDistance text,mobile text,city text, category text,address text, loc text)");
       });
     })
 
 
-    .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
       $ionicConfigProvider.views.forwardCache(true);
       $stateProvider
 
@@ -160,6 +160,15 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
                 controller: 'shareCtrl'
               }
             }
+          })
+          .state('app.profile', {
+            url: "/profile",
+            views: {
+              'menuContent': {
+                templateUrl: "templates/profile.html",
+                controller: 'profileCtrl'
+              }
+            }
           });
 
       //.state('app.singleStore', {
@@ -173,8 +182,8 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       //});
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/app/activeorders');
-      //$urlRouterProvider.otherwise('/app/login');
+     // $urlRouterProvider.otherwise('/app/activeorders');
+      $urlRouterProvider.otherwise('/app/profile');
     });
 
 
