@@ -184,7 +184,7 @@ app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.servic
       // if none of the above states are matched, use this as the fallback
 
       //$urlRouterProvider.otherwise('/app/activeorders');
-      $urlRouterProvider.otherwise('/app/orderdetail/wds');
+      $urlRouterProvider.otherwise('/app/share');
       //$urlRouterProvider.otherwise('/app/login');
     });
 
